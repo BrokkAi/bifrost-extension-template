@@ -1,0 +1,31 @@
+# Rust build output
+/target/
+**/*.rs.bk
+
+# Local Bifrost state and generated results
+/.bifrost/
+/artifacts/
+/results/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Coverage and profiling
+/coverage/
+*.profraw
+*.profdata
+
+# Temporary files
+*.tmp
+*.log

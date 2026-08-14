@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "subject": {
+    "namespace": "example",
+    "id": "sample-subject",
+    "category": "demonstration",
+    "outcome": "caller-owned"
+  },
+  "run": {
+    "namespace": "example",
+    "id": "sample-run",
+    "category": "development",
+    "outcome": "completed"
+  },
+  "producer": {
+    "format_name": "generic-source-snippets",
+    "format_version": "1",
+    "tool_name": "bifrost-extension-template",
+    "tool_version": "0.1.0",
+    "adapter_name": "snippet-adapter",
+    "adapter_version": "1"
+  },
+  "records": [
+    {
+      "record_id": "observed-update",
+      "path": "src/sample.ts",
+      "needle": "value = value * 2",
+      "category": "generic-event",
+      "outcome": "observed",
+      "attributes": {
+        "weight": 2,
+        "trusted": true
+      }
+    },
+    {
+      "record_id": "observed-return",
+      "path": "src/sample.ts",
+      "needle": "return value",
+      "category": "generic-event",
+      "outcome": "observed",
+      "attributes": {
+        "weight": 1,
+        "trusted": true
+      }
+    }
+  ]
+}

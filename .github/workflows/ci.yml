@@ -1,0 +1,43 @@
+name: Private CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.96.0
+        with:
+          components: clippy,rustfmt
+      - name: Verify exact registry dependency
+        shell: bash
+        run: |
+          cargo tree --locked -p bifrost-extension-template | tee dependency-tree.txt
+          grep -F "brokk-bifrost-runtime v0.9.5" dependency-tree.txt
+          ! grep -F "brokk-bifrost-runtime v0.9.5 (" dependency-tree.txt
+      - name: Format
+        run: cargo fmt --check
+      - name: Test
+        run: cargo test --locked --workspace
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - name: Lifecycle smoke
+        run: cargo run --locked -- run-example --output target/example-artifacts
+      - name: Verify cold bundle
+        run: cargo run --locked -- verify --bundle target/example-artifacts/cold
+      - name: Verify reopen bundle
+        run: cargo run --locked -- verify --bundle target/example-artifacts/reopen
+      - name: Reproduce cold bundle
+        run: cargo run --locked -- reproduce --bundle target/example-artifacts/cold --workspace fixtures/workspace --output target/reproduced-artifacts

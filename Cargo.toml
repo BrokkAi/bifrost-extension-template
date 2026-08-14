@@ -1,0 +1,25 @@
+[package]
+name = "bifrost-extension-template"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+license = "Apache-2.0"
+repository = "https://github.com/BrokkAi/bifrost-extension-template"
+description = "Private reference application for Bifrost's stable extension APIs"
+publish = false
+
+[dependencies]
+brokk-bifrost-runtime = "=0.9.5"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+sha2 = "0.10.8"
+
+[dev-dependencies]
+tempfile = "3.23.0"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
