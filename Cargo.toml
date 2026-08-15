@@ -5,7 +5,7 @@ edition = "2024"
 rust-version = "1.96"
 license = "Apache-2.0"
 repository = "https://github.com/BrokkAi/bifrost-extension-template"
-description = "Private reference application for Bifrost's stable extension APIs"
+description = "Reference application for Bifrost's stable extension APIs"
 publish = false
 
 [workspace]

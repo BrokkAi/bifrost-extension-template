@@ -10,6 +10,6 @@ Before committing, run:
     cargo test --workspace
     cargo clippy --workspace --all-targets -- -D warnings
 
-Generated bundles belong under `artifacts/` and remain untracked. This repository is private and `publish = false`; do not publish a crate or release from this repository. Public-readiness requires the exact published Bifrost pin in `Cargo.toml`, a clean-clone build with no Bifrost source checkout, cross-platform CI, reproducibility checks, and a final dependency/license audit.
+Generated bundles belong under `artifacts/` and remain untracked. This source repository is public and `publish = false`; do not publish a crate, package, template listing, or release from this repository. Distribution readiness requires the exact published Bifrost pin in `Cargo.toml`, a clean-clone build with no Bifrost source checkout, cross-platform CI, reproducibility checks, and a final dependency/license audit.
 
 Maintain `.agents/plans/implement-extension-lifecycle.md` as a living ExecPlan whenever the lifecycle or its validation changes.
