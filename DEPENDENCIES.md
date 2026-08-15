@@ -2,9 +2,9 @@
 
 The application is original Apache-2.0 work and depends on published Rust crates recorded exactly in `Cargo.lock`.
 
-The direct runtime dependency is `brokk-bifrost-runtime = 0.9.5`, part of Bifrost, licensed under Apache-2.0. It supplies the documented extension workspace, canonical observation and relation contracts, and reproducible run-manifest validator.
+The direct runtime dependency is `brokk-bifrost-runtime = 0.10.1`, part of Bifrost, licensed under Apache-2.0. It supplies the documented extension workspace, canonical observation and relation contracts, and reproducible run-manifest validator.
 
-`serde`, `serde_json`, and `sha2` provide data-model serialization and content hashing. `tempfile` is used only by tests. Their transitive dependency set and license texts remain the responsibility of their respective copyright holders.
+`serde`, `serde_json`, and `sha2` provide data-model serialization and content hashing. `clap` supplies the example CLI parser. The LSP example uses `lsp-server` and `lsp-types`; the MCP example uses the official Rust SDK `rmcp` and the `tokio` runtime. `tempfile` is used only by tests. Their transitive dependency set and license texts remain the responsibility of their respective copyright holders.
 
 Before any public distribution:
 

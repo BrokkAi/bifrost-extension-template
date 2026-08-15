@@ -20,6 +20,16 @@ The example performs the complete extension lifecycle without importing Bifrost 
 
 The derived result never persists response-local dense node numbers. Raw artifacts retain stable source identity, proof, completeness, boundaries, diagnostics, work, limits, generation, and provenance. An incomplete acquisition never becomes an authoritative absence claim.
 
+## Build your own tool
+
+The lifecycle is also a reusable static-analysis core. This repository includes three compile-tested ways to put an existing API in front of the same Bifrost-backed analysis:
+
+- The root binary is a `clap` CLI that emits the protocol-neutral report as JSON.
+- [`adapters/lsp`](adapters/lsp) is a standard LSP server exposing the analysis through `workspace/executeCommand`.
+- [`adapters/mcp`](adapters/mcp) is an MCP server exposing a typed `analyze_workspace` tool over standard input/output.
+
+Each adapter owns only transport, request validation, and error mapping. It does not depend on or expose Bifrost's own CLI, LSP, MCP, or implementation types. See [Build a static-analysis tool on Bifrost](docs/BUILDING_TOOLS.md) for the architecture, runnable commands, request examples, and exact Rust crates required for the analysis core, CLI, LSP, and MCP layers.
+
 ## Quick start
 
 Install Rust 1.96 or newer, then run from the repository root:
@@ -48,18 +58,18 @@ See [Artifact and evidence guide](docs/ARTIFACTS.md) for the bundle layout and c
 `Cargo.toml` pins the published package exactly:
 
 ```toml
-brokk-bifrost-runtime = "=0.9.5"
+brokk-bifrost-runtime = "=0.10.1"
 ```
 
 There is no path or Git dependency and no Bifrost source checkout is required. All integration goes through `brokk_bifrost_runtime::extension` or its canonical JSON/JSONL codecs. Bifrost never depends on this repository.
 
-The template does not expose analyzers, stores, database schemas, arenas, solver plans, language modules, MCP, or LSP types. It contains no Joern dependency and copies no Joern or Bifrost implementation code or APIs outside the documented extension surface.
+The template does not expose Bifrost's analyzers, stores, database schemas, arenas, solver plans, language modules, or protocol implementation types. Its adapters use the independent public `lsp-types` and `rmcp` crates, and all Bifrost integration stays within the documented extension surface.
 
 Use `Path` and `PathBuf` for filesystem access. Protocol identities use canonical forward-slash relative paths because those bytes are platform-independent and content-addressed.
 
 ## Cache-state statement
 
-The public 0.9.5 workspace API freezes an immutable source generation and builds an ephemeral analyzer on each open. The cold manifest therefore declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Do not change that declaration to a reuse claim unless a future documented API supplies evidence for it.
+The public 0.10.1 workspace API freezes an immutable source generation and builds an ephemeral analyzer on each open. The cold manifest therefore declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Do not change that declaration to a reuse claim unless a future documented API supplies evidence for it.
 
 ## Development and CI
 
@@ -71,7 +81,7 @@ cargo test --workspace
 cargo clippy --workspace --all-targets -- -D warnings
 ```
 
-Private GitHub Actions repeats these checks and the lifecycle smoke test on Linux, macOS, and Windows. Behavior tests cover positive, near-miss, unsupported, stale, truncated, cancelled, and incomplete outcomes. A reproducibility test compares every artifact byte across two fresh runs.
+Private GitHub Actions repeats these checks and the lifecycle smoke test on Linux, macOS, and Windows. Third-party Actions are pinned to full commit hashes, and a lockfile-sensitive, Bifrost-versioned Rust cache reuses registry and build outputs without caching lifecycle evidence bundles. Superseded PR runs are cancelled automatically. Behavior tests cover positive, near-miss, unsupported, stale, truncated, cancelled, and incomplete outcomes. A reproducibility test compares every artifact byte across two fresh runs.
 
 ## Evidence categories and citation
 

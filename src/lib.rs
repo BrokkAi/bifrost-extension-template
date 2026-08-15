@@ -29,8 +29,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const BIFROST_VERSION: &str = "0.9.5";
-const BIFROST_PACKAGE_REVISION: &str = "a3ca30bd3fb994cc07db4abf47a2c796854882ca";
+const BIFROST_VERSION: &str = "0.10.1";
+const BIFROST_PACKAGE_REVISION: &str = "511adaa2733067bb1b7809ab79e06ec0e3d2a146";
 const TEMPLATE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Paths needed for one complete cold/reopen lifecycle.
@@ -40,6 +40,14 @@ pub struct RunOptions {
     pub config: PathBuf,
     pub observations: PathBuf,
     pub output: PathBuf,
+}
+
+/// Portable inputs for one analysis request from a CLI, LSP, MCP, or another host.
+#[derive(Debug, Clone)]
+pub struct AnalysisOptions {
+    pub workspace: PathBuf,
+    pub config: PathBuf,
+    pub observations: PathBuf,
 }
 
 /// Stable identities printed after a successful lifecycle.
@@ -154,7 +162,7 @@ struct GenericRecord {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
-struct AnalysisResult {
+pub struct AnalysisResult {
     schema_version: &'static str,
     generation: WorkspaceGeneration,
     observation_input_digest: StableDigest,
@@ -363,6 +371,43 @@ pub fn run_lifecycle(options: &RunOptions) -> Result<RunSummary, TemplateError> 
         cold_manifest,
         reopen_manifest,
     })
+}
+
+/// Analyze one immutable workspace without writing a lifecycle evidence bundle.
+///
+/// This is the protocol-neutral boundary used by the example CLI, LSP, and MCP adapters. The
+/// returned value contains stable identities and acquisition state, never response-local aliases.
+///
+/// # Errors
+///
+/// Returns an error when an input is invalid, a source-backed seed cannot be selected, Bifrost
+/// cannot acquire the requested bounded evidence, or direct and serialized results differ.
+pub fn analyze_workspace(options: &AnalysisOptions) -> Result<AnalysisResult, TemplateError> {
+    let config_bytes = read(&options.config)?;
+    let input_bytes = read(&options.observations)?;
+    let config: ExtensionConfig = strict_json(&config_bytes, "configuration")?;
+    config.validate()?;
+    let input: GenericObservationInput = strict_json(&input_bytes, "observation input")?;
+    validate_generic_input(&input)?;
+
+    let workspace = open_workspace(&options.workspace)?;
+    let document = observation_document(
+        &workspace,
+        &options.workspace,
+        &config,
+        &input,
+        &input_bytes,
+    )?;
+    let observations = execute_observations(&workspace, &document)?;
+    let request = relation_request(&workspace, &options.workspace, &config)?;
+    let relations = execute_relations(&workspace, request)?;
+    let snapshot = relations.outcome.value.as_ref().ok_or_else(|| {
+        TemplateError::new(format!(
+            "no semantic snapshot: {:?}",
+            relations.outcome.completion
+        ))
+    })?;
+    analyze(&observations.result, &relations.outcome, snapshot)
 }
 
 /// Verify a bundle with Bifrost's bounded #2105 validator and return its digest.

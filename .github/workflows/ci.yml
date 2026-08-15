@@ -8,6 +8,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: private-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_PROFILE_DEV_DEBUG: 0
+  CARGO_PROFILE_TEST_DEBUG: 0
+
 jobs:
   test:
     name: ${{ matrix.os }}
@@ -17,16 +25,24 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
         with:
+          toolchain: 1.96.0
           components: clippy,rustfmt
+      - name: Cache Rust dependencies and build outputs
+        uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+        with:
+          # Bump the namespace with Bifrost so a major dependency-graph change cannot restore an
+          # older target tree alongside the new one and exhaust hosted-runner disk space.
+          shared-key: ${{ matrix.os }}-rust-1.96.0-bifrost-0.10.1
+          cache-on-failure: false
       - name: Verify exact registry dependency
         shell: bash
         run: |
           cargo tree --locked -p bifrost-extension-template | tee dependency-tree.txt
-          grep -F "brokk-bifrost-runtime v0.9.5" dependency-tree.txt
-          ! grep -F "brokk-bifrost-runtime v0.9.5 (" dependency-tree.txt
+          grep -F "brokk-bifrost-runtime v0.10.1" dependency-tree.txt
+          ! grep -F "brokk-bifrost-runtime v0.10.1 (" dependency-tree.txt
       - name: Format
         run: cargo fmt --check
       - name: Test
@@ -34,10 +50,10 @@ jobs:
       - name: Clippy
         run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - name: Lifecycle smoke
-        run: cargo run --locked -- run-example --output target/example-artifacts
+        run: cargo run --locked -- run-example --output artifacts/ci-example
       - name: Verify cold bundle
-        run: cargo run --locked -- verify --bundle target/example-artifacts/cold
+        run: cargo run --locked -- verify --bundle artifacts/ci-example/cold
       - name: Verify reopen bundle
-        run: cargo run --locked -- verify --bundle target/example-artifacts/reopen
+        run: cargo run --locked -- verify --bundle artifacts/ci-example/reopen
       - name: Reproduce cold bundle
-        run: cargo run --locked -- reproduce --bundle target/example-artifacts/cold --workspace fixtures/workspace --output target/reproduced-artifacts
+        run: cargo run --locked -- reproduce --bundle artifacts/ci-example/cold --workspace fixtures/workspace --output artifacts/ci-reproduced

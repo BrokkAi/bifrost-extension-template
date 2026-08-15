@@ -1,4 +1,6 @@
-use bifrost_extension_template::{RunOptions, reproduce_bundle, run_lifecycle, verify_bundle};
+use bifrost_extension_template::{
+    AnalysisOptions, RunOptions, analyze_workspace, reproduce_bundle, run_lifecycle, verify_bundle,
+};
 use brokk_bifrost_runtime::extension::{
     CacheStateKind, RunStatus, decode_canonical_run_manifest_json,
 };
@@ -12,6 +14,28 @@ fn fixture_options(output: &Path) -> RunOptions {
         observations: root.join("fixtures/input/observations.json"),
         output: output.to_path_buf(),
     }
+}
+
+#[test]
+fn protocol_neutral_analysis_is_serializable_and_keeps_only_stable_identity() {
+    let options = fixture_options(Path::new("unused"));
+    let result = analyze_workspace(&AnalysisOptions {
+        workspace: options.workspace,
+        config: options.config,
+        observations: options.observations,
+    })
+    .unwrap();
+    let encoded = serde_json::to_string(&result).unwrap();
+    let value: serde_json::Value = serde_json::from_str(&encoded).unwrap();
+
+    assert_eq!(value["schema_version"], "1.0");
+    assert!(
+        value["links"]
+            .as_array()
+            .is_some_and(|links| !links.is_empty())
+    );
+    assert!(!encoded.contains("local_id"));
+    assert!(!encoded.contains("dense"));
 }
 
 #[test]

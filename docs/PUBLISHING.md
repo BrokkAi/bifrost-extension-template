@@ -11,7 +11,7 @@ This repository is private and its Rust package has `publish = false`. Do not ma
 5. Inspect rendered README, citation metadata, generic input examples, generated artifacts, and manifests.
 6. Generate and review the final locked dependency/license inventory and required notices.
 7. Re-audit every branch, tag, and reachable commit for obsolete licensing statements immediately before visibility changes. The initial private `main` ancestry was replaced with a clean root on 2026-08-14 after PR #1 merged; do not assume that historical result covers later refs or commits.
-8. Confirm the repository contains no generated build/cache output, credentials, private fixtures, Bifrost implementation code, or Joern materials.
+8. Confirm the repository contains no generated build/cache output, credentials, private fixtures, or Bifrost implementation code outside the documented extension surface.
 9. Only after all gates pass, make a separate, explicitly authorized change to `publish`, visibility, package metadata, and release automation.
 
 The current exact runtime pin and clean-clone checks can pass during private development. Keeping the gate in place ensures they are rerun on the actual public release commit rather than inherited from an earlier validation.

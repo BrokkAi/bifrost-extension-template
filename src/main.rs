@@ -1,9 +1,46 @@
-use bifrost_extension_template::{RunOptions, reproduce_bundle, run_lifecycle, verify_bundle};
-use std::{env, path::PathBuf, process::ExitCode};
+use bifrost_extension_template::{
+    AnalysisOptions, RunOptions, analyze_workspace, reproduce_bundle, run_lifecycle, verify_bundle,
+};
+use clap::{Parser, Subcommand};
+use std::{path::PathBuf, process::ExitCode};
+
+#[derive(Debug, Parser)]
+#[command(about = "Build a static-analysis CLI on Bifrost's extension API")]
+struct Cli {
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(Debug, Subcommand)]
+enum Command {
+    Analyze {
+        #[arg(long)]
+        workspace: PathBuf,
+        #[arg(long)]
+        config: PathBuf,
+        #[arg(long)]
+        observations: PathBuf,
+    },
+    RunExample {
+        #[arg(long)]
+        output: PathBuf,
+    },
+    Verify {
+        #[arg(long)]
+        bundle: PathBuf,
+    },
+    Reproduce {
+        #[arg(long)]
+        bundle: PathBuf,
+        #[arg(long)]
+        workspace: PathBuf,
+        #[arg(long)]
+        output: PathBuf,
+    },
+}
 
 fn main() -> ExitCode {
-    let args = env::args_os().skip(1).collect::<Vec<_>>();
-    match execute(&args) {
+    match execute(Cli::parse().command) {
         Ok(message) => {
             println!("{message}");
             ExitCode::SUCCESS
@@ -15,13 +52,20 @@ fn main() -> ExitCode {
     }
 }
 
-fn execute(args: &[std::ffi::OsString]) -> Result<String, Box<dyn std::error::Error>> {
-    let Some(command) = args.first().and_then(|value| value.to_str()) else {
-        return Err("usage: bifrost-extension-template <run-example|verify|reproduce> ...".into());
-    };
+fn execute(command: Command) -> Result<String, Box<dyn std::error::Error>> {
     match command {
-        "run-example" => {
-            let output = flag_path(&args[1..], "--output")?;
+        Command::Analyze {
+            workspace,
+            config,
+            observations,
+        } => Ok(serde_json::to_string_pretty(&analyze_workspace(
+            &AnalysisOptions {
+                workspace,
+                config,
+                observations,
+            },
+        )?)?),
+        Command::RunExample { output } => {
             let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
             let summary = run_lifecycle(&RunOptions {
                 workspace: root.join("fixtures/workspace"),
@@ -34,31 +78,17 @@ fn execute(args: &[std::ffi::OsString]) -> Result<String, Box<dyn std::error::Er
                 summary.generation, summary.cold_manifest, summary.reopen_manifest
             ))
         }
-        "verify" => {
-            let bundle = flag_path(&args[1..], "--bundle")?;
+        Command::Verify { bundle } => {
             let digest = verify_bundle(&bundle)?;
             Ok(format!("verified {digest}"))
         }
-        "reproduce" => {
-            let bundle = flag_path(&args[1..], "--bundle")?;
-            let workspace = flag_path(&args[1..], "--workspace")?;
-            let output = flag_path(&args[1..], "--output")?;
+        Command::Reproduce {
+            bundle,
+            workspace,
+            output,
+        } => {
             let result = reproduce_bundle(&bundle, &workspace, &output)?;
             Ok(format!("reproduced {}", result.reproduced_manifest))
         }
-        _ => Err(format!("unknown command: {command}").into()),
     }
-}
-
-fn flag_path(
-    args: &[std::ffi::OsString],
-    name: &str,
-) -> Result<PathBuf, Box<dyn std::error::Error>> {
-    let position = args
-        .iter()
-        .position(|value| value == name)
-        .ok_or_else(|| format!("missing {name} PATH"))?;
-    args.get(position + 1)
-        .map(PathBuf::from)
-        .ok_or_else(|| format!("missing value after {name}").into())
 }

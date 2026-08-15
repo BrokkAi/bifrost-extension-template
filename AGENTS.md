@@ -1,6 +1,6 @@
 # Repository instructions
 
-This repository is the downstream proof for Bifrost's documented extension API. Keep it independent: depend only on the published `brokk-bifrost-runtime::extension` surface or its canonical JSON/JSONL contracts. Do not import Bifrost analyzers, language modules, stores, SQLite schemas, arenas, solver plans, MCP, or LSP types, and do not copy Bifrost or Joern implementation code.
+This repository is the downstream proof for Bifrost's documented extension API. Keep it independent: depend only on the published `brokk-bifrost-runtime::extension` surface or its canonical JSON/JSONL contracts. Do not import Bifrost analyzers, language modules, stores, SQLite schemas, arenas, solver plans, MCP, or LSP types, and do not copy Bifrost implementation code outside the documented extension surface.
 
 Keep all paths platform-independent with `Path` and `PathBuf`. Treat dense semantic node numbers as response-local aliases; persist and join only stable IDs plus their source spans and call context. Never turn an incomplete observation mapping or semantic snapshot into an authoritative absence claim.
 

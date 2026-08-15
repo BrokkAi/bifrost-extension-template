@@ -19,6 +19,9 @@ This private repository must prove that an independent Rust application can use 
 - [x] (2026-08-14 10:30Z) Pushed `dave/extension-lifecycle-proof` and opened ready private PR #1 to `main` without changing visibility or publishing anything.
 - [x] (2026-08-14 11:08Z) Observed private PR #1 CI run 31792059392 to completion: Ubuntu passed in 7m54s, macOS passed in 7m48s, and Windows passed in 24m39s. No platform-specific follow-up was required.
 - [x] (2026-08-14 11:14Z) After PR #1 merged, replaced `main` with a content-preserving clean root history so the obsolete pre-Apache licensing statement is not reachable from the publication branch. Repository visibility remained private and no package or release was published.
+- [x] (2026-08-15 08:01Z) Added compile-tested CLI, LSP, and MCP adapters around one protocol-neutral analysis entry point, documented the exact crates for each layer, and passed formatting, 11 tests, strict workspace Clippy, dependency-tree inspection, and a real CLI analysis run.
+- [x] (2026-08-15) Added lockfile-sensitive Rust caching to the three-platform workflow and pinned checkout, toolchain, and cache Actions to verified full commit hashes; lifecycle evidence remains freshly generated and uncached.
+- [x] (2026-08-15 14:39Z) Upgraded the exact published Bifrost runtime pin and all locked Bifrost crates to Apache-2.0 version 0.10.1. Formatting, 11 workspace tests, strict Clippy, dependency-tree inspection, and a clean-copy lifecycle build/test/run/verify/reproduce all passed without a Bifrost checkout.
 
 ## Surprises & Discoveries
 
@@ -28,10 +31,12 @@ This private repository must prove that an independent Rust application can use 
   Evidence: the public implementation calls `WorkspaceAnalyzer::build_ephemeral`. The reopen manifest must therefore declare `CacheStateKind::Rebuilt`, not a false reuse claim.
 - Observation: Relocating byte-identical fixture source changes the workspace generation and generation-bound semantic node IDs, while canonical source paths and extension input digests remain unchanged.
   Evidence: the repository worktree generation was `084638d3...`; the clean-copy root generation was `f7108682...`. The `reproduce` command therefore checks generation and reports the expected/observed mismatch before execution rather than claiming cross-root equivalence.
+- Observation: The first 0.10.1 Ubuntu CI run restored a 1.079 GB fallback target cache produced for the prior Bifrost lockfile, then exhausted runner disk while compiling a second dependency graph for the lifecycle binary.
+  Evidence: CI run 31890567649 reported a non-full cache match, 98 MB free, and `rustc-LLVM ERROR: IO failure on output stream: No space left on device`. The cache namespace now includes the Bifrost version, and CI disables dev/test debug information to bound artifact size.
 
 ## Decision Log
 
-- Decision: Use the exact registry dependency `brokk-bifrost-runtime = "=0.9.5"` and no Bifrost source path or Git checkout.
+- Decision: Use an exact registry dependency and no Bifrost source path or Git checkout; the current pin is `brokk-bifrost-runtime = "=0.10.1"`.
   Rationale: The published package is suitable, makes the dependency boundary independently testable, and satisfies the clean-consumer requirement.
   Date/Author: 2026-08-14 / Codex.
 - Decision: The example analysis emits observed relation links instead of scores or rankings.
@@ -43,14 +48,22 @@ This private repository must prove that an independent Rust application can use 
 - Decision: Represent the second open as a same-process rebuild with one warmup, not as cache reuse.
   Rationale: Cache-state declarations are evidence, not aspiration; the current API does not expose reusable workspace state.
   Date/Author: 2026-08-14 / Codex.
+- Decision: Keep CLI, LSP, and MCP as thin adapters over `analyze_workspace` rather than importing Bifrost's own protocol implementations.
+  Rationale: An extension author should own the public tool contract while Bifrost remains behind its documented extension boundary; one shared result also makes protocol equivalence straightforward to test.
+  Date/Author: 2026-08-15 / Codex.
+- Decision: Cache Cargo registry and compilation outputs in CI, but never cache generated lifecycle bundles.
+  Rationale: Dependency compilation is the dominant repeat cost, while cold/reopen bundle generation and reproduction must continue to exercise fresh evidence production. The cache namespace includes the Bifrost version to prevent cross-version target fallback from exhausting runner disk. Full Action commit pins make workflow execution immutable even though comments retain recognizable release-family labels.
+  Date/Author: 2026-08-15 / Codex.
 
 ## Outcomes & Retrospective
 
-The private downstream proof is complete. It opens immutable workspaces, adapts generic observations, requests finite source-backed control/value relations, joins stable identities without persisting dense aliases, preserves raw evidence and incomplete boundaries, emits deterministic #2105 bundles, and recreates or precisely rejects reproduction prerequisites. Local validation, an isolated registry-only copy, and private Linux/macOS/Windows CI pass. After the implementation merged, `main` was rewritten to a clean root so obsolete licensing language is not reachable from the publication branch. Public release remains an explicit maintainer action after rerunning the clean-clone, dependency/license, CI, reproducibility, and repository-history gates on the eventual publication commit; this work does not change visibility or publish anything.
+The private downstream proof is complete. It opens immutable workspaces, adapts generic observations, requests finite source-backed control/value relations, joins stable identities without persisting dense aliases, preserves raw evidence and incomplete boundaries, emits deterministic #2105 bundles, and recreates or precisely rejects reproduction prerequisites. A reusable `analyze_workspace` boundary now drives a JSON CLI, a standard LSP `workspace/executeCommand`, and a typed MCP tool without importing Bifrost protocol implementations. Local validation, an isolated registry-only copy, and private Linux/macOS/Windows CI pass. After the implementation merged, `main` was rewritten to a clean root so obsolete licensing language is not reachable from the publication branch. Public release remains an explicit maintainer action after rerunning the clean-clone, dependency/license, CI, reproducibility, and repository-history gates on the eventual publication commit; this work does not change visibility or publish anything.
 
 ## Context and Orientation
 
 `src/lib.rs` owns the complete lifecycle and exposes testable functions. `src/main.rs` is a small command-line wrapper. `fixtures/workspace/` is a tiny TypeScript program; `fixtures/input/` contains extension-owned configuration and generic observation records expressed by unique source snippets rather than analyzer IDs. The application converts those records into Bifrost's canonical observation document, asks for a procedure-bounded semantic snapshot, and joins only stable IDs. `tests/` covers the lifecycle and adverse behavior. `.github/workflows/ci.yml` runs the same checks on three operating systems.
+
+`adapters/lsp/` and `adapters/mcp/` are independent workspace packages that translate standard protocol requests into `AnalysisOptions`. `docs/BUILDING_TOOLS.md` identifies the exact analysis, CLI, LSP, and MCP dependencies and explains when to use each surface.
 
 A workspace generation is Bifrost's immutable digest of frozen source and configuration. A stable node ID is a content-derived identity that may be persisted; a dense local ID is only a small number inside one snapshot and must never be persisted as identity. A boundary is a typed explanation of missing or partial semantic acquisition. A run bundle is a directory containing canonical component files and `manifest.json`, whose component hashes and aggregate digest are validated by Bifrost's #2105 contract.
 
@@ -79,7 +92,7 @@ For validation, run:
     cargo test --workspace
     cargo clippy --workspace --all-targets -- -D warnings
 
-Then copy the repository without `.git` and without any sibling Bifrost checkout into a temporary directory and rerun the locked build and tests. `cargo tree` must show `brokk-bifrost-runtime v0.9.5` from the registry and no path dependency.
+Then copy the repository without `.git` and without any sibling Bifrost checkout into a temporary directory and rerun the locked build and tests. `cargo tree` must show `brokk-bifrost-runtime v0.10.1` from the registry and no path dependency.
 
 ## Validation and Acceptance
 
@@ -93,7 +106,7 @@ Build and test commands are safe to repeat. The application refuses to overwrite
 
 ## Artifacts and Notes
 
-The authoritative source package revision for `brokk-bifrost-runtime` 0.9.5 is `a3ca30bd3fb994cc07db4abf47a2c796854882ca`. The Bifrost master inspected for current contract context was `5a115bd8de56af1a35de71ca223d378c68cbc64f`. These are intentionally distinct: the template executes the published package, not an arbitrary source checkout.
+The authoritative source package revision for `brokk-bifrost-runtime` 0.10.1 is `511adaa2733067bb1b7809ab79e06ec0e3d2a146`. The Bifrost master inspected for the original contract context was `5a115bd8de56af1a35de71ca223d378c68cbc64f`. These are intentionally distinct: the template executes the published package, not an arbitrary source checkout.
 
 Validation evidence at completion:
 
@@ -120,3 +133,7 @@ Revision note (2026-08-14 10:30Z): Recorded the private branch push and ready PR
 Revision note (2026-08-14 11:08Z): Recorded successful completion of all three private CI jobs. The implementation plan now has no remaining private-development work; publication gates intentionally remain external future actions.
 
 Revision note (2026-08-14 11:14Z): Recorded the maintainer-authorized post-merge `main` history replacement. The publication audit remains a gate so future commits and refs are rechecked immediately before visibility changes.
+
+Revision note (2026-08-15 08:01Z): Added the shared analysis entry point and compile-tested CLI, LSP, and MCP adapters, plus exact dependency and usage guidance. The adapters preserve the extension boundary by translating public protocol requests into extension-owned inputs and serializing the same stable report.
+
+Revision note (2026-08-15 14:39Z): Upgraded the registry-only Bifrost dependency and complete locked Bifrost graph to 0.10.1, recording package revision `511adaa2733067bb1b7809ab79e06ec0e3d2a146`. The documented extension module remained source-identical, and both the workspace gate and an isolated no-Git clean-copy lifecycle passed.
