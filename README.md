@@ -1,8 +1,8 @@
 # Bifrost Extension Template
 
-A private reference application for building independent Rust and JSON/JSONL extensions on Bifrost's stable, bounded, evidence-carrying API.
+A reference application for building independent Rust and JSON/JSONL extensions on Bifrost's stable, bounded, evidence-carrying API.
 
-This repository is the downstream proof for [Bifrost epic #2099](https://github.com/BrokkAi/bifrost/issues/2099). It is not published as a crate, package, template, or release. Repository visibility must remain private until the publication checklist is completed.
+This repository is the downstream proof for [Bifrost epic #2099](https://github.com/BrokkAi/bifrost/issues/2099). Its source is public for inspection and reuse under Apache-2.0, but it is not published as a crate, package, template listing, or release.
 
 ## What the example proves
 
@@ -81,7 +81,7 @@ cargo test --workspace
 cargo clippy --workspace --all-targets -- -D warnings
 ```
 
-Private GitHub Actions repeats these checks and the lifecycle smoke test on Linux, macOS, and Windows. Third-party Actions are pinned to full commit hashes, and a lockfile-sensitive, Bifrost-versioned Rust cache reuses registry and build outputs without caching lifecycle evidence bundles. Superseded PR runs are cancelled automatically. Behavior tests cover positive, near-miss, unsupported, stale, truncated, cancelled, and incomplete outcomes. A reproducibility test compares every artifact byte across two fresh runs.
+GitHub Actions repeats these checks, verifies the locked dependency/license inventory, and runs the lifecycle smoke test on Linux, macOS, and Windows. Third-party Actions are pinned to full commit hashes, and a lockfile-sensitive, Bifrost-versioned Rust cache reuses registry and build outputs without caching lifecycle evidence bundles. Superseded PR runs are cancelled automatically. Behavior tests cover positive, near-miss, unsupported, stale, truncated, cancelled, and incomplete outcomes. A reproducibility test compares every artifact byte across two fresh runs.
 
 ## Evidence categories and citation
 
@@ -95,8 +95,8 @@ A valid manifest proves artifact identity and declared acquisition state. It doe
 
 When publishing results produced with Bifrost, cite the Bifrost version/revision, this extension and its immutable identity, the manifest digest, workspace revision, observation/configuration digests, limits, completion state, deviations, and cache declaration. See [`CITATION.cff`](CITATION.cff) and [Publication and citation guide](docs/PUBLISHING.md).
 
-## Licensing and publication gate
+## Licensing and distribution
 
 This repository and Bifrost are licensed under the Apache License 2.0. See [`LICENSE`](LICENSE). Dependencies retain their own licenses; see [Dependency attribution](DEPENDENCIES.md).
 
-Public-readiness still requires every item in [Publication and citation guide](docs/PUBLISHING.md): an exact published Bifrost dependency or executable, a clean-clone build with no source checkout, passing cross-platform CI and reproducibility checks, a final dependency/license audit, and a repository-history audit. This task does not change repository visibility or publish a package or release.
+The source-publication gates and their evidence are recorded in the [Publication and citation guide](docs/PUBLISHING.md). `publish = false` is intentional: making the source repository public does not publish a crate, package, template listing, or release.

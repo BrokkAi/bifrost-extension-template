@@ -1,4 +1,4 @@
-name: Private CI
+name: CI
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: private-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -43,6 +43,15 @@ jobs:
           cargo tree --locked -p bifrost-extension-template | tee dependency-tree.txt
           grep -F "brokk-bifrost-runtime v0.10.1" dependency-tree.txt
           ! grep -F "brokk-bifrost-runtime v0.10.1 (" dependency-tree.txt
+      - name: Verify locked dependency and license inventory
+        shell: bash
+        run: |
+          if command -v python3 >/dev/null 2>&1; then
+            python_command=python3
+          else
+            python_command=python
+          fi
+          cargo metadata --locked --format-version 1 | "$python_command" scripts/audit_dependencies.py --check audits/dependency-licenses.tsv
       - name: Format
         run: cargo fmt --check
       - name: Test

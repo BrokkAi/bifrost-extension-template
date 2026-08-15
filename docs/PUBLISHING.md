@@ -1,20 +1,23 @@
 # Publication and citation guide
 
-This repository is private and its Rust package has `publish = false`. Do not make it public, upload a crate, create a release, or describe it as supported until every gate below is evidenced on the intended release commit.
+This source repository is public under Apache-2.0. Its Rust package intentionally has `publish = false`: do not upload a crate, create a package or template listing, or create a GitHub release without a separate review and explicit authorization.
 
-## Public-readiness gates
+## Source-publication evidence
 
-1. Keep Bifrost on an exact published Apache-2.0 dependency or executable. Development Git/path dependencies are not acceptable in a public release.
-2. From a clean clone on a machine or isolated directory with no Bifrost source checkout, run `cargo build --locked`, `cargo test --locked --workspace`, strict Clippy, and the example lifecycle.
-3. Require green Linux, macOS, and Windows private CI for the same commit.
-4. Produce two fresh example runs and compare deterministic artifacts and hashes.
-5. Inspect rendered README, citation metadata, generic input examples, generated artifacts, and manifests.
-6. Generate and review the final locked dependency/license inventory and required notices.
-7. Re-audit every branch, tag, and reachable commit for obsolete licensing statements immediately before visibility changes. The initial private `main` ancestry was replaced with a clean root on 2026-08-14 after PR #1 merged; do not assume that historical result covers later refs or commits.
-8. Confirm the repository contains no generated build/cache output, credentials, private fixtures, or Bifrost implementation code outside the documented extension surface.
-9. Only after all gates pass, make a separate, explicitly authorized change to `publish`, visibility, package metadata, and release automation.
+The source-publication commit is required to satisfy all of the following:
 
-The current exact runtime pin and clean-clone checks can pass during private development. Keeping the gate in place ensures they are rerun on the actual public release commit rather than inherited from an earlier validation.
+1. Bifrost is pinned to the exact published Apache-2.0 `brokk-bifrost-runtime = "=0.10.1"`; there is no development Git or path dependency.
+2. A clean isolated copy with no Bifrost source checkout passes the locked build, workspace tests, strict Clippy, and example lifecycle.
+3. Linux, macOS, and Windows CI pass on the same commit.
+4. Fresh runs compare deterministic artifacts and hashes, and direct Rust, JSON, and JSONL paths agree.
+5. README, citation metadata, generic inputs, generated artifacts, and manifests have been inspected.
+6. [`../audits/dependency-licenses.tsv`](../audits/dependency-licenses.tsv) is generated from the final locked graph and checked for drift in CI. All entries declare a license; all non-workspace entries use the crates.io registry source. This is a source audit, not a substitute for a future binary-distribution notices review.
+7. Immediately before the visibility change, every remote branch, tag, and reachable commit is re-audited for obsolete licensing statements.
+8. The tracked tree and repository refs contain no generated build/cache output, credentials, private fixtures, or copied Bifrost implementation code outside the documented extension surface.
+
+These gates authorize public source visibility only. They do not authorize a crate upload, package or template listing, GitHub release, binary distribution, or support-status claim.
+
+Repeat the relevant audits for any future distribution commit rather than inheriting this source-publication evidence.
 
 ## Publishing result artifacts
 

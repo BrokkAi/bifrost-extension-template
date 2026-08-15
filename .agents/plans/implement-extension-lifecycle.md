@@ -4,7 +4,7 @@ This ExecPlan is a living document. The sections `Progress`, `Surprises & Discov
 
 ## Purpose / Big Picture
 
-This private repository must prove that an independent Rust application can use only Bifrost's documented extension boundary to open an immutable workspace, map extension-owned observations, request finite semantic relations, run a small domain-neutral analysis, and emit reproducible evidence bundles. A contributor can see the lifecycle by running the single `run-example` command, inspecting two verified bundles, and observing that direct Rust, canonical JSON, and JSONL paths agree. The repository must not expose Bifrost implementation internals or claim that missing relations are authoritative when acquisition is incomplete.
+This repository must prove that an independent Rust application can use only Bifrost's documented extension boundary to open an immutable workspace, map extension-owned observations, request finite semantic relations, run a small domain-neutral analysis, and emit reproducible evidence bundles. A contributor can see the lifecycle by running the single `run-example` command, inspecting two verified bundles, and observing that direct Rust, canonical JSON, and JSONL paths agree. The repository must not expose Bifrost implementation internals or claim that missing relations are authoritative when acquisition is incomplete.
 
 ## Progress
 
@@ -22,6 +22,8 @@ This private repository must prove that an independent Rust application can use 
 - [x] (2026-08-15 08:01Z) Added compile-tested CLI, LSP, and MCP adapters around one protocol-neutral analysis entry point, documented the exact crates for each layer, and passed formatting, 11 tests, strict workspace Clippy, dependency-tree inspection, and a real CLI analysis run.
 - [x] (2026-08-15) Added lockfile-sensitive Rust caching to the three-platform workflow and pinned checkout, toolchain, and cache Actions to verified full commit hashes; lifecycle evidence remains freshly generated and uncached.
 - [x] (2026-08-15 14:39Z) Upgraded the exact published Bifrost runtime pin and all locked Bifrost crates to Apache-2.0 version 0.10.1. Formatting, 11 workspace tests, strict Clippy, dependency-tree inspection, and a clean-copy lifecycle build/test/run/verify/reproduce all passed without a Bifrost checkout.
+- [x] (2026-08-15 15:35Z) Merged the 0.10.1 integration after Linux, macOS, and Windows CI passed, then replaced `main` with a content-identical clean root as authorized and confirmed only `main` remained on the remote.
+- [x] (2026-08-15 16:05Z) Prepared the source-publication commit: retained `publish = false`, removed private-development wording, added a deterministic 297-record locked dependency/license inventory and CI drift check, and documented that public source visibility does not authorize any crate, package, template listing, release, or binary distribution. A no-Git isolated copy at `/private/tmp/bifrost-extension-public.3D0YKL` passed the locked workspace build, 11 tests, strict Clippy, lifecycle generation, cold/reopen verification, reproduction, and inventory check without a Bifrost checkout.
 
 ## Surprises & Discoveries
 
@@ -57,7 +59,7 @@ This private repository must prove that an independent Rust application can use 
 
 ## Outcomes & Retrospective
 
-The private downstream proof is complete. It opens immutable workspaces, adapts generic observations, requests finite source-backed control/value relations, joins stable identities without persisting dense aliases, preserves raw evidence and incomplete boundaries, emits deterministic #2105 bundles, and recreates or precisely rejects reproduction prerequisites. A reusable `analyze_workspace` boundary now drives a JSON CLI, a standard LSP `workspace/executeCommand`, and a typed MCP tool without importing Bifrost protocol implementations. Local validation, an isolated registry-only copy, and private Linux/macOS/Windows CI pass. After the implementation merged, `main` was rewritten to a clean root so obsolete licensing language is not reachable from the publication branch. Public release remains an explicit maintainer action after rerunning the clean-clone, dependency/license, CI, reproducibility, and repository-history gates on the eventual publication commit; this work does not change visibility or publish anything.
+The downstream proof and source-publication preparation are complete. It opens immutable workspaces, adapts generic observations, requests finite source-backed control/value relations, joins stable identities without persisting dense aliases, preserves raw evidence and incomplete boundaries, emits deterministic #2105 bundles, and recreates or precisely rejects reproduction prerequisites. A reusable `analyze_workspace` boundary drives a JSON CLI, a standard LSP `workspace/executeCommand`, and a typed MCP tool without importing Bifrost protocol implementations. Local validation, an isolated registry-only copy, and Linux/macOS/Windows CI pass. After the implementation merged, `main` was rewritten to a clean root so obsolete licensing language is not reachable from the publication branch. The source-publication commit adds a checked, deterministic inventory of every locked package and license declaration. The package remains non-publishable; any crate, package, template listing, release, or binary distribution requires separate review and authorization.
 
 ## Context and Orientation
 
@@ -98,7 +100,7 @@ Then copy the repository without `.git` and without any sibling Bifrost checkout
 
 Acceptance requires all tests and Clippy to pass with no lint suppression. A fresh-run test must create two independent output roots and compare every relative file byte-for-byte. The direct/serialized test must compare canonical Bifrost responses and JSONL round trips. Adverse tests must prove that stale and unsupported states remain typed, truncation remains incomplete, near-miss records are terminally unmapped rather than silently absent, and `authoritative_absence` is false whenever either acquisition is incomplete.
 
-The README and citation file must render as readable Markdown/YAML, use platform-neutral commands and paths, state the private/non-published status, distinguish conformance/development/confirmatory evidence, and avoid excluded research vocabulary and Bifrost-private type names except in the explicit boundary warning.
+The README and citation file must render as readable Markdown/YAML, use platform-neutral commands and paths, distinguish public source visibility from non-published package status, distinguish conformance/development/confirmatory evidence, and avoid excluded research vocabulary and Bifrost-private type names except in the explicit boundary warning.
 
 ## Idempotence and Recovery
 
@@ -137,3 +139,5 @@ Revision note (2026-08-14 11:14Z): Recorded the maintainer-authorized post-merge
 Revision note (2026-08-15 08:01Z): Added the shared analysis entry point and compile-tested CLI, LSP, and MCP adapters, plus exact dependency and usage guidance. The adapters preserve the extension boundary by translating public protocol requests into extension-owned inputs and serializing the same stable report.
 
 Revision note (2026-08-15 14:39Z): Upgraded the registry-only Bifrost dependency and complete locked Bifrost graph to 0.10.1, recording package revision `511adaa2733067bb1b7809ab79e06ec0e3d2a146`. The documented extension module remained source-identical, and both the workspace gate and an isolated no-Git clean-copy lifecycle passed.
+
+Revision note (2026-08-15 16:05Z): Recorded the merged 0.10.1 validation and source-publication preparation. Added a checked locked-graph license inventory while preserving `publish = false` and the explicit prohibition on package, template, release, and binary publication.
