@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: >-
+  If you use this template or artifacts produced by a derived extension, cite
+  both this software and the exact Bifrost engine identity recorded in the run
+  manifest.
+title: Bifrost Extension Template
+type: software
+version: 0.1.0
+license: Apache-2.0
+authors:
+  - name: BrokkAi
+repository-code: https://github.com/BrokkAi/bifrost-extension-template
+url: https://github.com/BrokkAi/bifrost-extension-template
+keywords:
+  - static analysis
+  - reproducibility
+  - software extensions

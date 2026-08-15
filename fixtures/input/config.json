@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "workspace_repository": "fixture:bifrost-extension-template",
+  "workspace_revision": "1111111111111111111111111111111111111111",
+  "seed_path": "src/sample.ts",
+  "seed_needle": "transform",
+  "relations": ["control_dependence", "value_dependence"],
+  "direction": "both",
+  "limits": {
+    "max_seed_matches": 8,
+    "max_call_depth": 2,
+    "max_nodes": 256,
+    "max_edges": 512,
+    "max_boundaries": 64,
+    "max_diagnostics": 64,
+    "max_output_bytes": 4194304,
+    "max_materialized_files": 8,
+    "max_traversal_steps": 100000,
+    "max_source_bytes": 1048576,
+    "max_value_definitions": 256,
+    "max_value_uses": 256,
+    "max_value_dependence_edges": 512
+  }
+}
