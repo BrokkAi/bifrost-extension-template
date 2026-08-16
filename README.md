@@ -2,7 +2,7 @@
 
 A reference application for building independent Rust and JSON/JSONL extensions on Bifrost's stable, bounded, evidence-carrying API.
 
-This repository is the downstream proof for [Bifrost epic #2099](https://github.com/BrokkAi/bifrost/issues/2099). Its source is public for inspection and reuse under Apache-2.0, but it is not published as a crate, package, template listing, or release.
+The template is fully standalone and uses only Bifrost's published extension surface. Its source is public for inspection and reuse under Apache-2.0, but it is not published as a crate, package, template listing, or release.
 
 ## What the example proves
 
@@ -15,7 +15,7 @@ The example performs the complete extension lifecycle without importing Bifrost 
 5. Request finite procedure-local control- and value-dependence relations.
 6. Join exact observations to relation endpoints by stable identity, producing domain-neutral observed relation links.
 7. Prove equivalent direct Rust, canonical JSON, and JSONL behavior.
-8. Write and verify deterministic versioned artifacts and a #2105 run manifest.
+8. Write and verify deterministic versioned artifacts and a Bifrost run manifest.
 9. Reopen unchanged source, confirm the immutable generation, and truthfully declare the second analyzer construction as `rebuilt`.
 
 The derived result never persists response-local dense node numbers. Raw artifacts retain stable source identity, proof, completeness, boundaries, diagnostics, work, limits, generation, and provenance. An incomplete acquisition never becomes an authoritative absence claim.

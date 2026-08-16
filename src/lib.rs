@@ -410,7 +410,7 @@ pub fn analyze_workspace(options: &AnalysisOptions) -> Result<AnalysisResult, Te
     analyze(&observations.result, &relations.outcome, snapshot)
 }
 
-/// Verify a bundle with Bifrost's bounded #2105 validator and return its digest.
+/// Verify a bundle with Bifrost's bounded run-manifest validator and return its digest.
 ///
 /// # Errors
 ///
