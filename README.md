@@ -83,6 +83,14 @@ cargo clippy --workspace --all-targets -- -D warnings
 
 GitHub Actions repeats these checks, verifies the locked dependency/license inventory, and runs the lifecycle smoke test on Linux, macOS, and Windows. Third-party Actions are pinned to full commit hashes, and a lockfile-sensitive, Bifrost-versioned Rust cache reuses registry and build outputs without caching lifecycle evidence bundles. Superseded PR runs are cancelled automatically. Behavior tests cover positive, near-miss, unsupported, stale, truncated, cancelled, and incomplete outcomes. A reproducibility test compares every artifact byte across two fresh runs.
 
+A second workflow, [`.github/workflows/policy-scan.yml`](.github/workflows/policy-scan.yml), is a worked example of consuming Bifrost's published static-analysis gate from the Marketplace:
+
+```yaml
+- uses: BrokkAi/bifrost-policy-scan@v0
+```
+
+It runs the `bifrost.code-smells` pack with the action's defaults and uploads SARIF to GitHub code scanning. The exit-code contract is `0` clean, `1` findings at or above `fail-on`, and `2` unreliable — a scan that could not prove its own completeness and must never be treated as clean. `@v0` is the floating major tag that follows the newest Bifrost release; an exact `vX.Y.Z` tag is the reproducible-gate alternative. [`.bifrost/policy-scope.json`](.bifrost/policy-scope.json) records the one standing review decision this repository makes: performance review prompts in `tests` describe the test harness rather than shipped code, so they stay in the report as scoped findings instead of gating the build. Inputs, diff-aware gating, baselines, caching, and suppression formats are documented at [CI gating with GitHub Actions](https://bifrost.brokk.ai/ci-github-actions/).
+
 ## Evidence categories and citation
 
 A run manifest labels its purpose as one of:

@@ -2,8 +2,10 @@
 /target/
 **/*.rs.bk
 
-# Local Bifrost state and generated results
-/.bifrost/
+# Local Bifrost state and generated results. The policy scope file is a reviewed
+# decision about what the `tests` tree is, so it is tracked, not local state.
+/.bifrost/*
+!/.bifrost/policy-scope.json
 /artifacts/
 /results/
 

@@ -1,0 +1,22 @@
+name: Policy scan
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  # The action uploads its SARIF report to GitHub code scanning.
+  security-events: write
+
+jobs:
+  policy-scan:
+    name: Bifrost policies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # `@v0` is the floating major tag: it follows the newest Bifrost release,
+      # and each release's action defaults to the matching binary. Pin an exact
+      # `vX.Y.Z` tag instead when the gate itself must be reproducible.
+      - uses: BrokkAi/bifrost-policy-scan@v0
