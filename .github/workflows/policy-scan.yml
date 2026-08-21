@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      # `@v0` is the floating major tag: it follows the newest Bifrost release,
-      # and each release's action defaults to the matching binary. Pin an exact
-      # `vX.Y.Z` tag instead when the gate itself must be reproducible.
-      - uses: BrokkAi/bifrost-policy-scan@v0
+      # The published action's stable reference is the floating major tag
+      # `BrokkAi/bifrost-policy-scan@v0`, which follows the newest Bifrost
+      # release. This repository requires every third-party action to be
+      # SHA-pinned, so the example pins the commit `v0` currently names and
+      # keeps the tag in the comment. Copy `@v0` for a gate that tracks
+      # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
+      - uses: BrokkAi/bifrost-policy-scan@dd79bdf204e524cce6c25dcd25dc8afad2583687 # v0
