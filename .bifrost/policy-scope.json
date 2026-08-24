@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "scopes": [
+    {
+      "path": "tests",
+      "reason": "Behavior and reproducibility tests read every fixture and artifact byte on purpose; performance review prompts here describe the test harness, not shipped code.",
+      "policy_categories": ["performance"]
+    }
+  ]
+}
