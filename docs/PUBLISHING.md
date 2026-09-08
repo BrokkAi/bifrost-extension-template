@@ -6,7 +6,7 @@ This source repository is public under Apache-2.0. Its Rust package intentionall
 
 The source-publication commit is required to satisfy all of the following:
 
-1. Bifrost is pinned to the exact published Apache-2.0 `brokk-bifrost-runtime = "=0.10.1"`; there is no development Git or path dependency.
+1. Bifrost is pinned to the exact published Apache-2.0 `brokk-bifrost-runtime = "=0.11.0"`; there is no development Git or path dependency.
 2. A clean isolated copy with no Bifrost source checkout passes the locked build, workspace tests, strict Clippy, and example lifecycle.
 3. Linux, macOS, and Windows CI pass on the same commit.
 4. Fresh runs compare deterministic artifacts and hashes, and direct Rust, JSON, and JSONL paths agree.
@@ -31,7 +31,7 @@ Include:
 
 - Bifrost package version and source revision from `manifest.engine`;
 - extension name, version, commit or package digest, and configuration digest;
-- workspace repository/revision, generation, source inventory, roots, and exclusions;
+- workspace repository/revision, local generation, portable content identity, source inventory, roots, and exclusions;
 - observation producer and input digest;
 - relation and observation schema versions and component digests;
 - request limits, diagnostics, work, completion, boundaries, and deviations;

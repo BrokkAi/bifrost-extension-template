@@ -58,6 +58,10 @@ fn lifecycle_writes_verified_cold_and_reopen_bundles() {
     assert!(reopen_manifest.cache.same_process);
     assert!(!reopen_manifest.cache.semantic_artifact_reused);
     assert_eq!(cold_manifest.status, RunStatus::Complete);
+    assert_eq!(
+        cold_manifest.workspace.content_identity,
+        summary.content_identity
+    );
 
     let result = fs::read_to_string(cold.join("results/observed-relations.json")).unwrap();
     assert!(!result.contains("local_id"));
@@ -114,6 +118,24 @@ fn reproduction_recreates_exact_bundle_or_reports_generation_mismatch() {
         relocated.join("src/sample.ts"),
     )
     .unwrap();
+    let original_workspace = brokk_bifrost_runtime::extension::ExtensionWorkspace::open(
+        brokk_bifrost_runtime::extension::ExtensionWorkspaceOptions::new(
+            root.join("fixtures/workspace"),
+        ),
+    )
+    .unwrap();
+    let relocated_workspace = brokk_bifrost_runtime::extension::ExtensionWorkspace::open(
+        brokk_bifrost_runtime::extension::ExtensionWorkspaceOptions::new(&relocated),
+    )
+    .unwrap();
+    assert_ne!(
+        original_workspace.generation(),
+        relocated_workspace.generation()
+    );
+    assert_eq!(
+        original_workspace.content_identity(),
+        relocated_workspace.content_identity()
+    );
     let error = reproduce_bundle(
         &original.join("cold"),
         &relocated,
