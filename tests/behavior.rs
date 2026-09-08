@@ -208,16 +208,23 @@ fn stale_generation_is_rejected_and_open_generation_is_immutable() {
 }
 
 #[test]
-fn partial_empty_snapshot_never_proves_absence() {
+fn frontier_bounded_empty_snapshot_never_proves_absence() {
     let generation: WorkspaceGeneration =
         serde_json::from_str(&format!("\"{}\"", "a".repeat(64))).unwrap();
     let snapshot = SemanticRelationSnapshot::try_new(
         generation,
         digest(b"request"),
-        SemanticRelationStatus::Partial,
+        SemanticRelationStatus::FrontierBounded,
         Vec::new(),
         Vec::new(),
-        Vec::new(),
+        vec![SemanticRelationBoundary {
+            kind: SemanticRelationBoundaryKind::UnavailableContinuation,
+            at: None,
+            relations: vec![SemanticRelationKind::ValueDependence].into_boxed_slice(),
+            message: "analysis frontier reached".into(),
+            evidence: Box::new([]),
+            reason_summary: None,
+        }],
     )
     .unwrap();
     assert!(!snapshot.authoritative_absence());

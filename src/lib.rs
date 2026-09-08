@@ -12,7 +12,7 @@ use brokk_bifrost_runtime::extension::{
     RunPurpose, RunStatus, SemanticDirection, SemanticProof, SemanticRelationCompleteness,
     SemanticRelationKind, SemanticRelationLimits, SemanticRelationRequest, SemanticRelationScope,
     SemanticRelationSnapshot, SemanticRelationStatus, SemanticSeed, SourceSpan, StableDigest,
-    WorkspaceGeneration, WorkspaceRunIdentity, decode_request_json,
+    WorkspaceContentIdentity, WorkspaceGeneration, WorkspaceRunIdentity, decode_request_json,
     encode_observation_document_json, encode_observation_result_json, encode_relation_request_json,
     encode_relation_snapshot_json, encode_request_json, encode_response_json,
     encode_run_manifest_json, join_exact_observation, read_observation_mapping_jsonl,
@@ -29,8 +29,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const BIFROST_VERSION: &str = "0.10.1";
-const BIFROST_PACKAGE_REVISION: &str = "511adaa2733067bb1b7809ab79e06ec0e3d2a146";
+const BIFROST_VERSION: &str = "0.11.0";
+const BIFROST_PACKAGE_REVISION: &str = "e30944cfee489f0ff26a3ded36c9df5fb0d8bb04";
 const TEMPLATE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Paths needed for one complete cold/reopen lifecycle.
@@ -54,6 +54,7 @@ pub struct AnalysisOptions {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RunSummary {
     pub generation: WorkspaceGeneration,
+    pub content_identity: WorkspaceContentIdentity,
     pub cold_manifest: StableDigest,
     pub reopen_manifest: StableDigest,
 }
@@ -368,6 +369,7 @@ pub fn run_lifecycle(options: &RunOptions) -> Result<RunSummary, TemplateError> 
 
     Ok(RunSummary {
         generation: cold_workspace.generation().clone(),
+        content_identity: cold_workspace.content_identity().clone(),
         cold_manifest,
         reopen_manifest,
     })
@@ -1067,6 +1069,7 @@ fn build_manifest(
         commit: config.workspace_revision.clone(),
         dirty_tree: None,
         generation: evidence.description.generation.clone(),
+        content_identity: evidence.description.content_identity.clone(),
         source_inventory_digest: source_inventory_digest(workspace_root)?,
         roots: vec![".".into()].into_boxed_slice(),
         exclusions: Box::new([]),
@@ -1211,6 +1214,7 @@ fn completion_status(
         ExtensionCompletion::Cancelled => RunStatus::Cancelled,
         ExtensionCompletion::ExceededBudget { .. } => RunStatus::ExceededBudget,
         ExtensionCompletion::Truncated { .. }
+        | ExtensionCompletion::FrontierBounded { .. }
         | ExtensionCompletion::Complete
         | ExtensionCompletion::Ambiguous
         | ExtensionCompletion::Unknown

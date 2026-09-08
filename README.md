@@ -8,7 +8,7 @@ The template is fully standalone and uses only Bifrost's published extension sur
 
 The example performs the complete extension lifecycle without importing Bifrost implementation internals:
 
-1. Open a fixture workspace as an immutable generation and record its capability report.
+1. Open a fixture workspace as an immutable local generation, record its portable content identity, and retain its capability, store, tier, and acquisition-diagnostic reports.
 2. Resolve a unique source-backed seed from extension-owned configuration.
 3. Adapt generic observation records into Bifrost's versioned observation document.
 4. Map every record to a terminal exact, ambiguous, unmapped, stale, unsupported, or truncated outcome.
@@ -32,7 +32,7 @@ Each adapter owns only transport, request validation, and error mapping. It does
 
 ## Quick start
 
-Install Rust 1.96 or newer, then run from the repository root:
+Install Rust 1.97 or newer, then run from the repository root:
 
 ```console
 cargo run --locked -- run-example --output artifacts/example
@@ -41,7 +41,7 @@ cargo run --locked -- verify --bundle artifacts/example/reopen
 cargo run --locked -- reproduce --bundle artifacts/example/cold --workspace fixtures/workspace --output artifacts/reproduced
 ```
 
-The first command prints the shared workspace generation and two manifest digests. The verification commands independently check canonical manifest encoding, component paths, sizes, hashes, dependency roles, completion consistency, and aggregate digest. The reproduction command consumes the verified bundle inputs, checks the exact workspace generation and source inventory, recreates the lifecycle, and requires the selected manifest digest to match. A relocated or changed workspace produces a precise prerequisite mismatch instead of a false reproduction claim.
+The first command prints the shared local workspace generation, portable content identity, and two manifest digests. The verification commands independently check canonical manifest encoding, component paths, sizes, hashes, dependency roles, completion consistency, and aggregate digest. The reproduction command consumes the verified bundle inputs, checks the exact local workspace generation and source inventory, recreates the lifecycle, and requires the selected manifest digest to match. Relocating identical content preserves its content identity and stable semantic-node identities, but changes the local generation; exact bundle reproduction therefore reports a precise prerequisite mismatch instead of a false match.
 
 The command refuses to overwrite an existing output path. Generated bundles belong under `artifacts/`, which is ignored by Git.
 
@@ -58,7 +58,7 @@ See [Artifact and evidence guide](docs/ARTIFACTS.md) for the bundle layout and c
 `Cargo.toml` pins the published package exactly:
 
 ```toml
-brokk-bifrost-runtime = "=0.10.1"
+brokk-bifrost-runtime = "=0.11.0"
 ```
 
 There is no path or Git dependency and no Bifrost source checkout is required. All integration goes through `brokk_bifrost_runtime::extension` or its canonical JSON/JSONL codecs. Bifrost never depends on this repository.
@@ -69,7 +69,7 @@ Use `Path` and `PathBuf` for filesystem access. Protocol identities use canonica
 
 ## Cache-state statement
 
-The public 0.10.1 workspace API freezes an immutable source generation and builds an ephemeral analyzer on each open. The cold manifest therefore declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Do not change that declaration to a reuse claim unless a future documented API supplies evidence for it.
+The public 0.11.0 workspace API freezes an immutable source generation and exposes a portable content identity. This example uses the default ephemeral mode, so the cold manifest declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Opt-in persisted workspaces must report their engaged store mode and diagnostics before a tool makes any reuse claim.
 
 ## Development and CI
 
@@ -89,7 +89,7 @@ A second workflow, [`.github/workflows/policy-scan.yml`](.github/workflows/polic
 - uses: BrokkAi/bifrost-policy-scan@v0
 ```
 
-This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names and records the tag in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
+This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names for Bifrost 0.11.0 and records both tags in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
 
 The example runs the `bifrost.code-smells` pack with the action's defaults and uploads SARIF to GitHub code scanning. The exit-code contract is `0` clean, `1` findings at or above `fail-on`, and `2` unreliable — a scan that could not prove its own completeness and must never be treated as clean. [`.bifrost/policy-scope.json`](.bifrost/policy-scope.json) records the one standing review decision this repository makes: performance review prompts in `tests` describe the test harness rather than shipped code, so they stay in the report as scoped findings instead of gating the build. Inputs, diff-aware gating, baselines, caching, and suppression formats are documented at [CI gating with GitHub Actions](https://bifrost.brokk.ai/ci-github-actions/).
 

@@ -74,8 +74,11 @@ fn execute(command: Command) -> Result<String, Box<dyn std::error::Error>> {
                 output,
             })?;
             Ok(format!(
-                "generation={} cold={} reopen={}",
-                summary.generation, summary.cold_manifest, summary.reopen_manifest
+                "generation={} content_identity={} cold={} reopen={}",
+                summary.generation,
+                summary.content_identity,
+                summary.cold_manifest,
+                summary.reopen_manifest
             ))
         }
         Command::Verify { bundle } => {

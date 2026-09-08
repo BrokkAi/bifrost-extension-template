@@ -13,7 +13,7 @@ Start with the exact published Bifrost runtime package plus serialization crates
 
 ```toml
 [dependencies]
-brokk-bifrost-runtime = "=0.10.1"
+brokk-bifrost-runtime = "=0.11.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
 sha2 = "0.10.8"
@@ -31,7 +31,7 @@ let report = bifrost_extension_template::analyze_workspace(
 )?;
 ```
 
-The returned report keeps stable identities, proof, completeness, boundaries, generation, and digests. Serialize it freely; do not persist response-local dense node aliases or interpret an incomplete result as authoritative absence.
+The returned report keeps stable identities, proof, completeness, frontier-versus-budget boundaries, local generation, per-tier work, and digests. The workspace description separately carries a portable content identity, the engaged persistence mode, and open-time diagnostics. Serialize these stable values freely; do not persist response-local dense node aliases or interpret a frontier-bounded, budget-bounded, unsupported, cancelled, or otherwise incomplete result as authoritative absence.
 
 ## CLI
 

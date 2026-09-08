@@ -6,7 +6,7 @@ Each run directory is a Bifrost extension bundle with canonical `manifest.json`,
 
 - `inputs/config.json` is the versioned relation seed, scope, direction, budgets, and workspace identity.
 - `inputs/observations.json` is the generic caller-owned observation source.
-- `results/capabilities.json` binds the API and language capability report to the workspace generation.
+- `results/capabilities.json` binds the API, portable content identity, language capability report, persistence decision, tier report, and acquisition diagnostics to the local workspace generation.
 - `results/observation-document.json` is the canonical Bifrost observation request after source identity is added.
 - `results/observation-mapping.json` and `.jsonl` are equivalent terminal mapping outcomes.
 - `results/relation-request.json` is the finite semantic request.
@@ -31,4 +31,4 @@ Observation mapping is complete only when every record ended exact or unmapped. 
 
 Canonical JSON uses lexicographically sorted object keys and a final newline. Bifrost codecs provide canonical ordering and content digests for observation, relation, JSONL, and manifest contracts. The template sorts all derived links by record, relation, and stable endpoints.
 
-Volatile timestamps, hostnames, elapsed time, and memory readings are omitted. Two fresh runs against the same immutable workspace root and target/profile produce byte-identical bundles. A relocated checkout can have a different workspace generation and generation-bound semantic identities; `reproduce` reports that exact prerequisite mismatch. Cross-target manifest `engine.target` values intentionally differ and should be compared as declared provenance, not normalized away.
+Volatile timestamps, hostnames, elapsed time, and memory readings are omitted. Two fresh runs against the same immutable workspace root and target/profile produce byte-identical bundles. A relocated checkout has the same portable content identity and stable semantic-node identities but a different local workspace generation; `reproduce` reports that exact prerequisite mismatch. Cross-target manifest `engine.target` values intentionally differ and should be compared as declared provenance, not normalized away.
