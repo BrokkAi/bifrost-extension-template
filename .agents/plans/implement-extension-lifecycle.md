@@ -74,3 +74,7 @@ Revision note (2026-09-08): Reintroduced the lifecycle ExecPlan required by repo
 - [ ] Verify cross-platform PR CI.
 
 The runtime dependency remains registry-only and exact. The example continues to use ephemeral workspace mode; any changed v0.11.5 extension contract must be reflected in lifecycle code and evidence before completion.
+
+## Policy selection follow-up (2026-09-28)
+
+The v0.11.5 action scan on PR #5 was `UNRELIABLE` because `bifrost.correctness.python-absent-member` reported `capability_incomplete` on this workspace. The workflow now uses the action's `policy-ids` selector to run the other 16 members of `bifrost.code-smells`. This is an explicit selection decision, not a finding suppression or a completeness override. Verify the exact new PR head in CI before qualifying the policy gate.

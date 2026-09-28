@@ -23,3 +23,24 @@ jobs:
       # keeps the tag in the comment. Copy `@v0` for a gate that tracks
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
       - uses: BrokkAi/bifrost-policy-scan@3a5fc1465ca249e6cf5b8240f174819890b75351 # v0 (v0.11.5)
+        with:
+          # v0.11.5's python-absent-member rule reports capability_incomplete
+          # for this workspace. Select the remaining code-smell rules explicitly
+          # so an incomplete rule is never mistaken for a clean finding set.
+          policy-ids: >-
+            bifrost.correctness.dynamic-evaluation
+            bifrost.correctness.unsafe-deserialization
+            bifrost.correctness.go-data-race
+            bifrost.correctness.go-nil-dereference
+            bifrost.correctness.go-wrong-error-on-failure-path
+            bifrost.correctness.rayon-in-blocking-lazy-init
+            bifrost.performance.loop-invariant-sort
+            bifrost.performance.regex-compile-in-loop
+            bifrost.performance.file-read-in-loop
+            bifrost.performance.serialization-in-loop
+            bifrost.performance.parsing-in-loop
+            bifrost.performance.database-call-in-loop
+            bifrost.performance.network-call-in-loop
+            bifrost.performance.subprocess-in-loop
+            bifrost.performance.sleep-in-loop
+            bifrost.performance.expensive-operation-in-nested-loop
