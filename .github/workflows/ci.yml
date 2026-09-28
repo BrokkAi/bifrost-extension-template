@@ -35,14 +35,14 @@ jobs:
         with:
           # Bump the namespace with Bifrost so a major dependency-graph change cannot restore an
           # older target tree alongside the new one and exhaust hosted-runner disk space.
-          shared-key: ${{ matrix.os }}-rust-1.97.0-bifrost-0.11.0
+          shared-key: ${{ matrix.os }}-rust-1.97.0-bifrost-0.11.5
           cache-on-failure: false
       - name: Verify exact registry dependency
         shell: bash
         run: |
           cargo tree --locked -p bifrost-extension-template | tee dependency-tree.txt
-          grep -F "brokk-bifrost-runtime v0.11.0" dependency-tree.txt
-          ! grep -F "brokk-bifrost-runtime v0.11.0 (" dependency-tree.txt
+          grep -F "brokk-bifrost-runtime v0.11.5" dependency-tree.txt
+          ! grep -F "brokk-bifrost-runtime v0.11.5 (" dependency-tree.txt
       - name: Verify locked dependency and license inventory
         shell: bash
         run: |

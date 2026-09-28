@@ -29,7 +29,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const BIFROST_VERSION: &str = "0.11.0";
+const BIFROST_VERSION: &str = "0.11.5";
 const BIFROST_PACKAGE_REVISION: &str = "e30944cfee489f0ff26a3ded36c9df5fb0d8bb04";
 const TEMPLATE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
