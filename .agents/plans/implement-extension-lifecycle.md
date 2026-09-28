@@ -63,3 +63,14 @@ From the repository root, run:
 `cargo tree --locked -p bifrost-extension-template` must resolve `brokk-bifrost-runtime v0.11.0` from crates.io, never a path or Git checkout. Repeat the locked build and tests from a clean temporary copy without `.git`, generated artifacts, or a sibling Bifrost source tree. Generated bundles remain untracked under `artifacts/`.
 
 Revision note (2026-09-08): Reintroduced the lifecycle ExecPlan required by repository instructions after the historical plan was removed from `main`, and recorded the 0.11.0 migration contract and remaining gates.
+
+## v0.11.5 update (2026-09-28)
+
+- [x] Started from current `origin/main` on `dave/update-bifrost-v0.11.5`, preserving the divergent local `main` commit.
+- [x] Verified published `brokk-bifrost-runtime` 0.11.5 and the release tag; `bifrost-policy-scan` tags `v0` and `v0.11.5` both resolve to `3a5fc1465ca249e6cf5b8240f174819890b75351`.
+- [x] Refreshed the exact runtime lockfile and verified the 350-record dependency/license inventory.
+- [x] Ran format, workspace tests, strict Clippy, registry-only dependency check, and run/verify/reproduce smoke; cold and reproduced manifest digests matched.
+- [x] Ran workspace tests from `/private/tmp/bifrost-template-0.11.5.x19Xta`, a source-only copy without Git metadata or a Bifrost checkout, reusing the local Cargo target.
+- [ ] Verify cross-platform PR CI.
+
+The runtime dependency remains registry-only and exact. The example continues to use ephemeral workspace mode; any changed v0.11.5 extension contract must be reflected in lifecycle code and evidence before completion.

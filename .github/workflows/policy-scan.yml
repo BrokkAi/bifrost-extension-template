@@ -22,4 +22,4 @@ jobs:
       # SHA-pinned, so the example pins the commit `v0` currently names and
       # keeps the tag in the comment. Copy `@v0` for a gate that tracks
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
-      - uses: BrokkAi/bifrost-policy-scan@548355ff0d96c9039d5c6113c97cd0b6be2d52dc # v0 (v0.11.0)
+      - uses: BrokkAi/bifrost-policy-scan@3a5fc1465ca249e6cf5b8240f174819890b75351 # v0 (v0.11.5)

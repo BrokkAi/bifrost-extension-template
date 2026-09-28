@@ -58,7 +58,7 @@ See [Artifact and evidence guide](docs/ARTIFACTS.md) for the bundle layout and c
 `Cargo.toml` pins the published package exactly:
 
 ```toml
-brokk-bifrost-runtime = "=0.11.0"
+brokk-bifrost-runtime = "=0.11.5"
 ```
 
 There is no path or Git dependency and no Bifrost source checkout is required. All integration goes through `brokk_bifrost_runtime::extension` or its canonical JSON/JSONL codecs. Bifrost never depends on this repository.
@@ -69,7 +69,7 @@ Use `Path` and `PathBuf` for filesystem access. Protocol identities use canonica
 
 ## Cache-state statement
 
-The public 0.11.0 workspace API freezes an immutable source generation and exposes a portable content identity. This example uses the default ephemeral mode, so the cold manifest declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Opt-in persisted workspaces must report their engaged store mode and diagnostics before a tool makes any reuse claim.
+The public 0.11.5 workspace API freezes an immutable source generation and exposes a portable content identity. This example uses the default ephemeral mode, so the cold manifest declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Opt-in persisted workspaces must report their engaged store mode and diagnostics before a tool makes any reuse claim.
 
 ## Development and CI
 
@@ -89,7 +89,7 @@ A second workflow, [`.github/workflows/policy-scan.yml`](.github/workflows/polic
 - uses: BrokkAi/bifrost-policy-scan@v0
 ```
 
-This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names for Bifrost 0.11.0 and records both tags in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
+This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names for Bifrost 0.11.5 and records both tags in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
 
 The example runs the `bifrost.code-smells` pack with the action's defaults and uploads SARIF to GitHub code scanning. The exit-code contract is `0` clean, `1` findings at or above `fail-on`, and `2` unreliable — a scan that could not prove its own completeness and must never be treated as clean. [`.bifrost/policy-scope.json`](.bifrost/policy-scope.json) records the one standing review decision this repository makes: performance review prompts in `tests` describe the test harness rather than shipped code, so they stay in the report as scoped findings instead of gating the build. Inputs, diff-aware gating, baselines, caching, and suppression formats are documented at [CI gating with GitHub Actions](https://bifrost.brokk.ai/ci-github-actions/).
 
