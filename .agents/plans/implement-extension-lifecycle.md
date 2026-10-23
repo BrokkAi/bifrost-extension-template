@@ -78,3 +78,17 @@ The runtime dependency remains registry-only and exact. The example continues to
 ## Policy selection follow-up (2026-09-28)
 
 The v0.11.5 action scan on PR #5 was `UNRELIABLE` because `bifrost.correctness.python-absent-member` reported `capability_incomplete` on this workspace. The workflow now uses the action's `policy-ids` selector to run the other 16 members of `bifrost.code-smells`. This is an explicit selection decision, not a finding suppression or a completeness override. Verify the exact new PR head in CI before qualifying the policy gate.
+
+## v0.14.0 update (2026-10-23)
+
+- [x] Started from `main` at `02c97c3` on `dave/template-bifrost-v0140-0ad1b1`.
+- [x] Verified published `brokk-bifrost-runtime` 0.14.0; its crates.io source revision is `267e76caf3b7cbee937109b94ba5100d56181178`. `bifrost-policy-scan` tags `v0` and `v0.14.0` both resolve to `9e63f06687f41a011acf7384638756c396796936`.
+- [x] Raised the toolchain to Rust 1.99.1 (`rust-version = "1.99"`); the 0.14.0 analyzer and language crates require Rust 1.99.
+- [x] Refreshed the exact runtime lockfile and regenerated the 379-record dependency/license inventory.
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `71e59a0c…`.
+- [ ] Repeat the locked build and tests from a clean source-only copy without Git metadata or a Bifrost checkout.
+- [ ] Verify cross-platform PR CI and the policy-scan action on the new head.
+
+Surprises: the public `extension` re-exports and `EXTENSION_API_VERSION` are unchanged from 0.11.5, so the lifecycle compiles without source changes. 0.14.0 adds `StableDigest::sha256`, which now replaces the template's one-shot digest helpers. The 0.11.5 update left `BIFROST_PACKAGE_REVISION` at the 0.11.0 source revision; it now names the 0.14.0 revision. The new dependency graph introduces `version-ranges` under MPL-2.0, the first file-level copyleft license in the inventory; review it in the final distribution audit. Rust 1.99's pedantic `unused_async_trait_impl` lint rejects the `ServerHandler` impl that `rmcp`'s `tool_router(server_handler)` emits (still the case in rmcp 3.7.0), so the MCP example now writes that impl explicitly with `#[tool_handler]` and a scoped allow. On macOS, debug binaries now print a non-fatal `linker_messages` warning about the `__eh_frame` size.
+
+Decision: the action's default `bifrost.code-smells` pack (public rules 0.1.1, pack 2.16.0) grew from 17 to 30 policies, so the former 16-ID `policy-ids` allowlist would have silently skipped 13 rules. The workflow now runs the default pack and names only `bifrost.correctness.python-absent-member` through the new `exclude-policy-ids` input, which records the exclusion in the report. Whether that rule is still `capability_incomplete` on this workspace under 0.14.0 has not been re-measured; drop the exclusion if the PR scan shows it complete.

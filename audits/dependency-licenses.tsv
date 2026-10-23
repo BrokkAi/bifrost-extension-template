@@ -11,7 +11,6 @@ anstyle	1.0.14	MIT OR Apache-2.0	crates.io
 anstyle-parse	1.0.0	MIT OR Apache-2.0	crates.io
 anstyle-query	1.1.5	MIT OR Apache-2.0	crates.io
 anstyle-wincon	3.0.11	MIT OR Apache-2.0	crates.io
-arbitrary	1.4.2	MIT OR Apache-2.0	crates.io
 arc-swap	1.9.2	MIT OR Apache-2.0	crates.io
 arraydeque	0.5.1	MIT/Apache-2.0	crates.io
 autocfg	1.5.1	Apache-2.0 OR MIT	crates.io
@@ -27,26 +26,42 @@ bitflags	2.13.1	MIT OR Apache-2.0	crates.io
 blink-alloc	0.3.1	MIT OR Apache-2.0	crates.io
 block-buffer	0.10.4	MIT OR Apache-2.0	crates.io
 borrow-or-share	0.2.4	MIT-0	crates.io
-brokk-bifrost-analysis	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-core	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-cpp	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-csharp	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-flow	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-go	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-js-ts	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-jvm	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-php	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-policy	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-python	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-rql	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-ruby	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-runtime	0.11.5	Apache-2.0	crates.io
-brokk-bifrost-rust	0.11.5	Apache-2.0	crates.io
-brokk-tree-sitter-c-sharp	0.23.7	MIT	crates.io
-brokk-tree-sitter-javascript	0.25.1	MIT	crates.io
+boxcar	0.2.14	MIT	crates.io
+brokk-bifrost-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-core	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-cpp	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-cpp-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-csharp	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-csharp-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-flow	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-go	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-go-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-js-ts	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-js-ts-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-jvm	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-php	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-php-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-policy	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-python	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-python-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-rql	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-ruby	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-ruby-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-runtime	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-rust	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-rust-analysis	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-semantic	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-store	0.14.0	Apache-2.0	crates.io
+brokk-bifrost-tools	0.14.0	Apache-2.0	crates.io
+brokk-tree-sitter-c-sharp	0.23.8	MIT	crates.io
+brokk-tree-sitter-cpp	0.24.3	MIT	crates.io
+brokk-tree-sitter-javascript	0.25.3	MIT	crates.io
 brokk-tree-sitter-json	0.24.9	MIT	crates.io
 brokk-tree-sitter-kotlin	0.4.6	MIT	crates.io
-brokk-tree-sitter-rust	0.24.3	MIT	crates.io
+brokk-tree-sitter-php	0.24.4	MIT	crates.io
+brokk-tree-sitter-rust	0.24.5	MIT	crates.io
+brokk-tree-sitter-scala	0.26.3	MIT	crates.io
+brokk-tree-sitter-typescript	0.23.7	MIT	crates.io
 bstr	1.13.1	MIT OR Apache-2.0	crates.io
 bumpalo	3.20.3	MIT OR Apache-2.0	crates.io
 bytecount	0.6.9	Apache-2.0/MIT	crates.io
@@ -56,13 +71,16 @@ cap-primitives	4.0.2	Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT	crates.
 cap-std	4.0.2	Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT	crates.io
 cc	1.2.56	MIT OR Apache-2.0	crates.io
 cesu8	1.1.0	Apache-2.0/MIT	crates.io
+cfg-expr	0.20.10	MIT OR Apache-2.0	crates.io
 cfg-if	1.0.4	MIT OR Apache-2.0	crates.io
+cfg_aliases	0.2.2	MIT	crates.io
 chrono	0.4.45	MIT OR Apache-2.0	crates.io
 clap	4.6.6	MIT OR Apache-2.0	crates.io
 clap_builder	4.6.6	MIT OR Apache-2.0	crates.io
 clap_derive	4.6.4	MIT OR Apache-2.0	crates.io
 clap_lex	1.1.0	MIT OR Apache-2.0	crates.io
 colorchoice	1.0.5	MIT OR Apache-2.0	crates.io
+configparser	3.3.0	MIT OR LGPL-3.0-or-later	crates.io
 core-foundation-sys	0.8.7	MIT OR Apache-2.0	crates.io
 cpufeatures	0.2.17	MIT OR Apache-2.0	crates.io
 crc32fast	1.5.0	MIT OR Apache-2.0	crates.io
@@ -77,7 +95,6 @@ darling_core	0.24.0	MIT	crates.io
 darling_macro	0.24.0	MIT	crates.io
 data-encoding	2.11.1	MIT	crates.io
 derive-new	0.7.0	MIT	crates.io
-derive_arbitrary	1.4.2	MIT OR Apache-2.0	crates.io
 digest	0.10.7	MIT OR Apache-2.0	crates.io
 displaydoc	0.2.7	MIT OR Apache-2.0	crates.io
 dyn-clone	1.0.20	MIT OR Apache-2.0	crates.io
@@ -144,9 +161,11 @@ io-lifetimes	2.0.4	Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT	crates.io
 io-lifetimes	3.0.1	Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT	crates.io
 ipnet	2.12.1	MIT OR Apache-2.0	crates.io
 is_terminal_polyfill	1.70.2	MIT OR Apache-2.0	crates.io
+itertools	0.13.0	MIT OR Apache-2.0	crates.io
 itoa	1.0.18	MIT OR Apache-2.0	crates.io
 jclassfile	0.6.1	MIT	crates.io
 jobserver	0.1.35	MIT OR Apache-2.0	crates.io
+js-semver	1.0.1	MIT-0	crates.io
 js-sys	0.3.104	MIT OR Apache-2.0	crates.io
 jsonschema	0.48.5	MIT	crates.io
 jsonschema-regex	0.48.5	MIT	crates.io
@@ -175,6 +194,9 @@ micromap	0.3.0	MIT	crates.io
 miniz_oxide	0.8.9	MIT OR Zlib OR Apache-2.0	crates.io
 mio	1.2.3	MIT	crates.io
 moka	0.12.16	(MIT OR Apache-2.0) AND Apache-2.0	crates.io
+nix	0.31.3	MIT	crates.io
+nom	8.0.0	MIT	crates.io
+nom-language	0.1.0	MIT	crates.io
 notify	8.2.0	CC0-1.0	crates.io
 notify-types	2.1.0	MIT OR Apache-2.0	crates.io
 num	0.4.3	MIT OR Apache-2.0	crates.io
@@ -192,6 +214,8 @@ outref	0.5.2	MIT	crates.io
 parking_lot	0.12.5	MIT OR Apache-2.0	crates.io
 parking_lot_core	0.9.12	MIT OR Apache-2.0	crates.io
 pastey	0.2.3	MIT OR Apache-2.0	crates.io
+pep440_rs	0.7.3	Apache-2.0 OR BSD-2-Clause	crates.io
+pep508_rs	0.9.2	Apache-2.0 OR BSD-2-Clause	crates.io
 percent-encoding	2.3.2	MIT OR Apache-2.0	crates.io
 pin-project-lite	0.2.17	Apache-2.0 OR MIT	crates.io
 pkg-config	0.3.34	MIT OR Apache-2.0	crates.io
@@ -259,7 +283,9 @@ synstructure	0.13.2	MIT	crates.io
 tagptr	0.2.0	MIT/Apache-2.0	crates.io
 tar	0.4.46	MIT OR Apache-2.0	crates.io
 tempfile	3.27.0	MIT OR Apache-2.0	crates.io
+thiserror	1.0.69	MIT OR Apache-2.0	crates.io
 thiserror	2.0.20	MIT OR Apache-2.0	crates.io
+thiserror-impl	1.0.69	MIT OR Apache-2.0	crates.io
 thiserror-impl	2.0.20	MIT OR Apache-2.0	crates.io
 tinystr	0.8.4	Unicode-3.0	crates.io
 tokio	1.53.1	MIT	crates.io
@@ -273,28 +299,30 @@ tracing	0.1.44	MIT	crates.io
 tracing-attributes	0.1.31	MIT	crates.io
 tracing-core	0.1.36	MIT	crates.io
 tree-sitter	0.25.10	MIT	crates.io
-tree-sitter-cpp	0.23.4	MIT	crates.io
 tree-sitter-go	0.25.0	MIT	crates.io
 tree-sitter-java	0.23.5	MIT	crates.io
+tree-sitter-javadoc	0.3.1	MIT	crates.io
 tree-sitter-language	0.1.7	MIT	crates.io
-tree-sitter-php	0.23.11	MIT	crates.io
 tree-sitter-properties	0.3.0	MIT	crates.io
 tree-sitter-python	0.25.0	MIT	crates.io
 tree-sitter-rbs	0.2.2	MIT	crates.io
 tree-sitter-ruby	0.23.1	MIT	crates.io
-tree-sitter-scala	0.26.2	MIT	crates.io
-tree-sitter-typescript	0.23.2	MIT	crates.io
 tree-sitter-yaml	0.7.2	MIT	crates.io
+tree-sitter-yarnlock	0.2.0	MIT	crates.io
+typed-path	0.12.4	MIT OR Apache-2.0	crates.io
 typenum	1.20.1	MIT OR Apache-2.0	crates.io
 unicode-general-category	1.1.0	Apache-2.0	crates.io
 unicode-ident	1.0.24	(MIT OR Apache-2.0) AND Unicode-3.0	crates.io
 unicode-width	0.2.2	MIT OR Apache-2.0	crates.io
+unscanny	0.1.0	MIT OR Apache-2.0	crates.io
 url	2.5.8	MIT OR Apache-2.0	crates.io
+urlencoding	2.1.3	MIT	crates.io
 utf8_iter	1.0.4	Apache-2.0 OR MIT	crates.io
 utf8parse	0.2.2	Apache-2.0 OR MIT	crates.io
 uuid	1.24.0	Apache-2.0 OR MIT	crates.io
 uuid-simd	0.8.0	MIT	crates.io
 vcpkg	0.2.15	MIT/Apache-2.0	crates.io
+version-ranges	0.1.3	MPL-2.0	crates.io
 version_check	0.9.5	MIT/Apache-2.0	crates.io
 vsimd	0.8.0	MIT	crates.io
 walkdir	2.5.0	Unlicense/MIT	crates.io
@@ -337,6 +365,7 @@ winx	0.36.4	Apache-2.0 WITH LLVM-exception	crates.io
 wit-bindgen	0.57.1	Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT	crates.io
 writeable	0.6.4	Unicode-3.0	crates.io
 xxhash-rust	0.8.18	BSL-1.0	crates.io
+yarn-lock-parser	0.14.0	MIT	crates.io
 yoke	0.8.3	Unicode-3.0	crates.io
 yoke-derive	0.8.2	Unicode-3.0	crates.io
 zerocopy	0.8.56	BSD-2-Clause OR Apache-2.0 OR MIT	crates.io
@@ -346,6 +375,6 @@ zerofrom-derive	0.1.7	Unicode-3.0	crates.io
 zerotrie	0.2.5	Unicode-3.0	crates.io
 zerovec	0.11.7	Unicode-3.0	crates.io
 zerovec-derive	0.11.4	Unicode-3.0	crates.io
-zip	2.4.2	MIT	crates.io
+zip	9.0.5	MIT	crates.io
 zmij	1.0.23	MIT	crates.io
 zopfli	0.8.3	Apache-2.0	crates.io
