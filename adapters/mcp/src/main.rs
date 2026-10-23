@@ -1,8 +1,8 @@
 use bifrost_extension_template::{AnalysisOptions, analyze_workspace};
 use rmcp::{
-    ErrorData, ServiceExt,
+    ErrorData, ServerHandler, ServiceExt,
     handler::server::wrapper::{Json, Parameters},
-    schemars, tool, tool_router,
+    schemars, tool, tool_handler, tool_router,
 };
 use serde::Deserialize;
 use serde_json::Value;
@@ -31,7 +31,7 @@ impl Default for AnalysisServer {
     }
 }
 
-#[tool_router(server_handler)]
+#[tool_router]
 impl AnalysisServer {
     #[tool(
         name = "analyze_workspace",
@@ -54,6 +54,12 @@ impl AnalysisServer {
         Ok(Json(value))
     }
 }
+
+// rmcp generates these handler methods as `async` without awaiting, which Rust
+// 1.99's pedantic `unused_async_trait_impl` lint rejects.
+#[allow(clippy::unused_async_trait_impl)]
+#[tool_handler]
+impl ServerHandler for AnalysisServer {}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

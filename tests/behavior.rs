@@ -1,10 +1,9 @@
 use bifrost_extension_template::{RunOptions, run_lifecycle};
 use brokk_bifrost_runtime::extension::*;
-use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, fs, path::Path};
 
 fn digest(bytes: &[u8]) -> StableDigest {
-    StableDigest::parse(format!("{:x}", Sha256::digest(bytes))).unwrap()
+    StableDigest::sha256(bytes)
 }
 
 fn workspace(root: &Path) -> ExtensionWorkspace {

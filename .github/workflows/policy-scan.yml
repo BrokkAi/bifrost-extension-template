@@ -22,25 +22,15 @@ jobs:
       # SHA-pinned, so the example pins the commit `v0` currently names and
       # keeps the tag in the comment. Copy `@v0` for a gate that tracks
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
-      - uses: BrokkAi/bifrost-policy-scan@3a5fc1465ca249e6cf5b8240f174819890b75351 # v0 (v0.11.5)
+      - uses: BrokkAi/bifrost-policy-scan@9e63f06687f41a011acf7384638756c396796936 # v0 (v0.14.0)
         with:
-          # v0.11.5's python-absent-member rule reports capability_incomplete
-          # for this workspace. Select the remaining code-smell rules explicitly
-          # so an incomplete rule is never mistaken for a clean finding set.
-          policy-ids: >-
-            bifrost.correctness.dynamic-evaluation
-            bifrost.correctness.unsafe-deserialization
-            bifrost.correctness.go-data-race
-            bifrost.correctness.go-nil-dereference
-            bifrost.correctness.go-wrong-error-on-failure-path
-            bifrost.correctness.rayon-in-blocking-lazy-init
-            bifrost.performance.loop-invariant-sort
-            bifrost.performance.regex-compile-in-loop
-            bifrost.performance.file-read-in-loop
-            bifrost.performance.serialization-in-loop
-            bifrost.performance.parsing-in-loop
-            bifrost.performance.database-call-in-loop
-            bifrost.performance.network-call-in-loop
-            bifrost.performance.subprocess-in-loop
-            bifrost.performance.sleep-in-loop
-            bifrost.performance.expensive-operation-in-nested-loop
+          # Bifrost ships no rules; the action acquires them from bifrost-packs.
+          # Its default packs-source pin is public rules 0.1.1, a schema 1
+          # release that the Bifrost 0.14.0 engine refuses
+          # (incompatible-strict-selection). Pin the rules release published
+          # for 0.14.0 and its native pack dependency by manifest SHA-256.
+          packs-source: >-
+            {"repository":"https://github.com/BrokkAi/bifrost-packs",
+            "rules_version":"0.5.1",
+            "manifest_sha256":"e607e5c360889805bf614ab05f96feda199f6ad3009d00f49158cd9f507ada6b",
+            "semantic_manifest_sha256":"dd8888f763f13732ede1f05a34c2bd205dad25705b3da967e9df949c14842570"}

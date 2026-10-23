@@ -29,8 +29,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const BIFROST_VERSION: &str = "0.11.5";
-const BIFROST_PACKAGE_REVISION: &str = "e30944cfee489f0ff26a3ded36c9df5fb0d8bb04";
+const BIFROST_VERSION: &str = "0.14.0";
+const BIFROST_PACKAGE_REVISION: &str = "267e76caf3b7cbee937109b94ba5100d56181178";
 const TEMPLATE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Paths needed for one complete cold/reopen lifecycle.
@@ -1313,7 +1313,7 @@ fn canonical_value(value: Value) -> Value {
 }
 
 fn sha256(bytes: &[u8]) -> StableDigest {
-    StableDigest::parse(format!("{:x}", Sha256::digest(bytes))).expect("SHA-256 is valid")
+    StableDigest::sha256(bytes)
 }
 
 fn read(path: &Path) -> Result<Vec<u8>, TemplateError> {
