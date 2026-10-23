@@ -24,8 +24,12 @@ jobs:
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
       - uses: BrokkAi/bifrost-policy-scan@9e63f06687f41a011acf7384638756c396796936 # v0 (v0.14.0)
         with:
-          # python-absent-member reported capability_incomplete for this
-          # workspace under v0.11.5. Exclude it explicitly and run the rest of
-          # bifrost.code-smells so an incomplete rule is never mistaken for a
-          # clean finding set; the exclusion is recorded in the report.
-          exclude-policy-ids: bifrost.correctness.python-absent-member
+          # The action's built-in default is public rules 0.1.1, a schema 1
+          # release that the Bifrost 0.14.0 engine refuses
+          # (incompatible-strict-selection). Pin the rules release published
+          # for 0.14.0 and its native pack dependency by manifest SHA-256.
+          packs-source: >-
+            {"repository":"https://github.com/BrokkAi/bifrost-packs",
+            "rules_version":"0.5.1",
+            "manifest_sha256":"e607e5c360889805bf614ab05f96feda199f6ad3009d00f49158cd9f507ada6b",
+            "semantic_manifest_sha256":"dd8888f763f13732ede1f05a34c2bd205dad25705b3da967e9df949c14842570"}
