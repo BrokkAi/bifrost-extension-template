@@ -33,3 +33,11 @@ jobs:
             "rules_version":"0.5.1",
             "manifest_sha256":"e607e5c360889805bf614ab05f96feda199f6ad3009d00f49158cd9f507ada6b",
             "semantic_manifest_sha256":"dd8888f763f13732ede1f05a34c2bd205dad25705b3da967e9df949c14842570"}
+      - name: TEMP diagnose pack acquisition
+        if: failure()
+        shell: bash
+        run: |
+          for f in "${RUNNER_TEMP}"/bifrost-pack-action.*/receipt.json; do
+            echo "== ${f}"
+            jq '{status, failure, request, rejections: (.rejections // .failure.rejections // null)}' "${f}" || cat "${f}"
+          done
