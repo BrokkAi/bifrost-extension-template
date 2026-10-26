@@ -22,13 +22,13 @@ jobs:
       # SHA-pinned, so the example pins the commit `v0` currently names and
       # keeps the tag in the comment. Copy `@v0` for a gate that tracks
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
-      - uses: BrokkAi/bifrost-policy-scan@9e63f06687f41a011acf7384638756c396796936 # v0 (v0.14.0)
+      - uses: BrokkAi/bifrost-policy-scan@e354f00167404ab508f13beb45144a46f3213b35 # v0 (v0.14.1)
         with:
           # Bifrost ships no rules; the action acquires them from bifrost-packs.
           # Its default packs-source pin is public rules 0.1.1, a schema 1
-          # release that the Bifrost 0.14.0 engine refuses
+          # release that Bifrost 0.14.x engines refuse
           # (incompatible-strict-selection). Pin the rules release published
-          # for 0.14.0 and its native pack dependency by manifest SHA-256.
+          # for 0.14.x and its native pack dependency by manifest SHA-256.
           packs-source: >-
             {"repository":"https://github.com/BrokkAi/bifrost-packs",
             "rules_version":"0.5.1",
