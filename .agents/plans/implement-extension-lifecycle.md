@@ -103,3 +103,12 @@ Discovery (2026-10-23): with the 0.5.1 pin, three consecutive PR scans failed ac
 - [ ] Verify cross-platform PR CI on the new head.
 
 The action's `action.yml` differs from v0.14.1's predecessor only in its default engine version. Its default `packs-source` pin is still public rules 0.1.1, which 0.14.x engines refuse, so the workflow keeps the rules 0.5.1 / packs 0.6.0 pin. 0.14.1 admits every rules 0.5.1 policy, but the newly admitted ones are opt-in and do not change the default `bifrost.code-smells` run. PR acquisition still downloads release assets through the anonymous `api.github.com` API, so the PR policy scan remains subject to the rate limit described above until upstream fixes it.
+
+## v0.14.2 update (2026-10-27)
+
+- [x] Verified published `brokk-bifrost-runtime` 0.14.2; its crates.io source revision is `073c23790739e33f33abc98338651689eaf8b7c0`, and its `src/` is byte-identical to 0.14.1. `bifrost-policy-scan` tags `v0` and `v0.14.2` both resolve to `c4babd131eedee9baee6962380f01792daf10c35`.
+- [x] Refreshed the exact runtime lockfile and the license inventory.
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the 380-record dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `ff31aeae…`.
+- [ ] Verify cross-platform PR CI and the policy scan on the new head.
+
+v0.14.2 resolves the upstream acquisition defects recorded above. The action's default `packs-source` is now rules 0.5.1 / packs 0.6.0 with the same manifest digests this workflow pinned, guarded by a release check that the installed engine admits it. The action passes the job's `github.token` for public sources outside the scanning repository on every event, PRs included. The engine downloads public `bifrost-packs` assets from `github.com` release URLs rather than the API and resolves tags from one listing. Acquisition failures now print the receipt's message. The workflow therefore drops its `packs-source` override and runs the action with default inputs.

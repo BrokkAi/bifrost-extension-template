@@ -243,9 +243,9 @@ checksum = "36f64beae40a84da1b4b26ff2761a5b895c12adc41dc25aaee1c4f2bbfe97a6e"
 
 [[package]]
 name = "brokk-bifrost-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c4797525c5f9efa8da34a87f1c51d2eaf671c8d691f50d96a1cac938d46417f"
+checksum = "354ccbcb643837a7511ca2e2bbd618f5f4f8e2de7d0dc6fdd154b7ebbaeaf6de"
 dependencies = [
  "arc-swap",
  "brokk-bifrost-core",
@@ -302,9 +302,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-core"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ca9db9c02e4ea2a574364abf972e5f1759a675a1afca5581d619b2f5e6c16e2a"
+checksum = "4a60c9c5d635b089ad4c8f3f3c689dda6a0584cff68021dc455ebf2deb47ab24"
 dependencies = [
  "bincode",
  "git2",
@@ -329,9 +329,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-cpp"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b698cb5fbaad610b7aeac7fe28485f46df60b09a01aa5ca742ed20004bd233d"
+checksum = "e83bfbcf88eec0e3311099949bfc6b79391f043ba35afb82da359bcc51ee4ccb"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-cpp",
@@ -344,9 +344,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-cpp-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eab6946c9524f7418cfb55821e81977673c015e1f29b24df7682b9f91d27742d"
+checksum = "c584e576b9c18a883426d0c54b2113f7f7de3c27d2767b1d74b2b9498dd74ea0"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -364,9 +364,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-csharp"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84d15137485c3670b66825bbee28536c7f43fec934ad27eae2e9ab541085f330"
+checksum = "dfd7feb6fb14c9f8f7e6fe1c2cc927b78a53f988a576b8384a34694bc0b0e6bd"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-c-sharp",
@@ -376,9 +376,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-csharp-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "036b876c3c204861d2a051ce1cc40e3e2801f9d8f5c079a8f0fb3384dfced9e1"
+checksum = "2cbfd85e65fab023e51b6481497c48bf985d053396d0c2b13ac2c887351971b5"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -399,9 +399,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-flow"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12017be535ce9d330932256a5b74d575569c282165cd6371e2546890d907707f"
+checksum = "cdf8b7ff003b53ad25fb6074d1c012407649f4390d20f3b34cad7c7874e999d1"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -414,9 +414,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-go"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0aa5a2803e72e89c5f50cd08053aba7f9b1b63711f366c34ff5c062239e3d4ed"
+checksum = "96e50c66214e01b2182623bd4cf949d4588a721126fb3889c1d66e276f6555d4"
 dependencies = [
  "brokk-bifrost-core",
  "rayon",
@@ -428,9 +428,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-go-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dde10b9b60f57807603b1558f2d287309a445b89ef9d9d9f621697383f650ca1"
+checksum = "5284df07a0b697122d7cff1598b5e6995d0cda043848cfc009cafa8884d1517a"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -450,25 +450,24 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-js-ts"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6bcccf5b3c226f123b3d1dd1444d307b4c1522af5617ee3a5d468110090d42c3"
+checksum = "93ddac81d3a8809d09ef5ddb251d84783cb6319dc9e7151826021a50688b2a3c"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-javascript",
  "brokk-tree-sitter-typescript",
  "js-semver",
  "rayon",
- "regex",
  "serde_json",
  "tree-sitter",
 ]
 
 [[package]]
 name = "brokk-bifrost-js-ts-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b95b7f913bfe8b5640d77dd89ee1d1efde67b94cc66468b1382fcb49c35e29b6"
+checksum = "47ccaf25d7acd868e6552717b4840ce03a63c3562f4fc23ab1f7be3db5c0b821"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -492,9 +491,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-jvm"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c016ed27458fa3ae0ad81d4c1c6012f808fa45125be77575cc779a26afc4d37"
+checksum = "af0b624e3dd572f34a73d5fd548887b2f9fed73fb5ce4df33570bc0f7af40d94"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-kotlin",
@@ -510,9 +509,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-jvm-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bfd274698dd09c866fc4be78a419744c4bb0c6953e461452808cbc5aa905abb1"
+checksum = "c30d155fa71534043f6b2a33275d8fb9afbe0c63eebdeccfcf5505b9d3b4e6f3"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -536,9 +535,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-php"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "223d21505ca7b4f183fe758bd06c28bb944699e4353b80c0303122c96f8c5e04"
+checksum = "c13e48e7f826862680df520ea05b579a0e36ef032a069222fa2c647a129e0899"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-php",
@@ -552,9 +551,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-php-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0e3bae727afb0a0be84c69aa2ad46b232c048935a69747b390e8e48e5407a618"
+checksum = "ea747b1135d3fcf62b2c5a856a345e88d4ac7ae4ab60e271a4af139ae8ef09a0"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -573,9 +572,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-policy"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "506952a9acd0d656b76041a302d0713531f09bf76648eeff33c2391d4d8714ce"
+checksum = "d3cfceca788d9255bb6c707cfac71e3c3fd8cbd2324aee4b836de8a76d4f5270"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-flow",
@@ -596,12 +595,11 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-python"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5ebd0a31a951376dc7524cbbc030cb306c807cc09be0ffca0c1e2e6b3e3531a"
+checksum = "ed223b6c3a8441badaa1f4e5cbb0007b45d04d0c7dc18b324f6905f62b9e4c81"
 dependencies = [
  "brokk-bifrost-core",
- "rayon",
  "regex",
  "toml",
  "tree-sitter",
@@ -610,9 +608,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-python-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad9dee0e8b819f3c645a8c84741eb6c0e75c4f3c73ce713a21e7adf3c3202c9b"
+checksum = "465e2d9c3cb0d415c5322cd7ff4e7c82b58cc9176ba1312c3945de5059deab4a"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -639,9 +637,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-rql"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e277d707b58859dbb954c095be2d9f92f4d75ba8ed497c663cf0645d3db41433"
+checksum = "afda90b770b36685157dc956b545fb07f6d8f678efbf009de9bb108d582166bb"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -674,9 +672,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-ruby"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c94997b9c6505c4587f0b96a79246e30345e1247e5eae8b5d6f9194c9f7ff718"
+checksum = "7dd230abf60704d55e412fa67b858233497cdc495e71e50f192077ffdd2e78f0"
 dependencies = [
  "brokk-bifrost-core",
  "serde_json",
@@ -686,9 +684,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-ruby-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af720d4bc98cc5792716141b751ddc588735da24f6aade4647c4bc3b11038a87"
+checksum = "be64f583e906137033442c0fc85df36163cbf5dcd74b79fdffc768218682334c"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -708,9 +706,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-runtime"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e739d5e514e67f3437729b4ae13dad8846d7a01700ebd3aeb1b370e0e4045a7e"
+checksum = "8a8b1f46d879bab83811d3c87344cfdcf4e966a8ccc3fefb242ce26dbd83c013"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-flow",
@@ -723,9 +721,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-rust"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d6cf6d06f0a8248a8d65971205214a495e73eecbb80d795bc7b6cc909b91bb1"
+checksum = "4c31eed30ca312c20acee3525a8609a7535ab2f20ff79ae340c95fcedf5e1101"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-rust",
@@ -741,9 +739,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-rust-analysis"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "050534ff53432bd7c22e61c7e8c6404b19fd8120394a80b3d44ca737a7d3da66"
+checksum = "1fbfba6a73db66aebf9803c07e806ae8b2e7c36eb22c4971882c36b1823b9bbf"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -767,9 +765,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-semantic"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fefa352d2310ef2d96d6098afa9c9e5227574ffdbcd394ffa83c5e1f8a7d393a"
+checksum = "d3bfc4004dd10a95b1f2f92e73bfa2d4508e3e0857fc03fab106f9f57a446139"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-bifrost-cpp",
@@ -801,9 +799,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-store"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01cc40049e376c48b07826e2abfc6c2d15b8347c8cfa6e461eae271524634be4"
+checksum = "fe699137ca4f20d3483aa3ebb8a0cece7505a90c5e15ca87beb90ae41e0921ed"
 dependencies = [
  "bincode",
  "brokk-bifrost-core",
@@ -845,9 +843,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-tools"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b4606f048ba43afd32e56ac1f045c0591a206b63925e6cd4199a02e19ee29a35"
+checksum = "bb28a349fb605036a8350b147aa2c9b69715a119b79f0cfc2a134b53c6a2e9b6"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
@@ -896,9 +894,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-tree-sitter-cpp"
-version = "0.24.4"
+version = "0.24.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "db93690d322cd7ace683b7d46c850930a3ee91845b3f448e1beefa1809905453"
+checksum = "674f79e5a0d24788fea4086549cbc0ee6290fdfe142c7ac400ba3ae23542d6d8"
 dependencies = [
  "cc",
  "tree-sitter-language",
