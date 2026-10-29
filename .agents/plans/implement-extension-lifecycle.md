@@ -112,3 +112,16 @@ The action's `action.yml` differs from v0.14.1's predecessor only in its default
 - [ ] Verify cross-platform PR CI and the policy scan on the new head.
 
 v0.14.2 resolves the upstream acquisition defects recorded above. The action's default `packs-source` is now rules 0.5.1 / packs 0.6.0 with the same manifest digests this workflow pinned, guarded by a release check that the installed engine admits it. The action passes the job's `github.token` for public sources outside the scanning repository on every event, PRs included. The engine downloads public `bifrost-packs` assets from `github.com` release URLs rather than the API and resolves tags from one listing. Acquisition failures now print the receipt's message. The workflow therefore drops its `packs-source` override and runs the action with default inputs.
+
+## v0.14.3 update (2026-10-29)
+
+- [x] Verified published `brokk-bifrost-runtime` 0.14.3; its `src/` is byte-identical to 0.14.2. `bifrost-policy-scan` tags `v0` and `v0.14.3` both resolve to `2e462a5512cab6207d81a53bcae142763a4212d5`.
+- [x] Refreshed the exact runtime lockfile and the 381-record license inventory (adds `sha1`, MIT OR Apache-2.0).
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `75ffc204…`.
+- [ ] Verify cross-platform PR CI and the policy scan on the new head.
+
+The 0.14.3 release is partial: npm and PyPI publication failed on oversized binaries. This repository uses neither. It consumes the crates.io packages, which resolve at 0.14.3, and the action installs the engine from the GitHub Release archives with their `.sha256` files, which are published for every platform.
+
+Surprise: from 0.14.3 the release publishes pre-built qualified `.crate` artifacts that carry no `.cargo_vcs_info.json`, so crates.io no longer records the source revision. The release run's runtime publish job names `RELEASE_COMMIT` `234c701a3605519c656a10b7cc29396306b124d9`, the `v0.14.3` tag commit, and `BIFROST_PACKAGE_REVISION` now records that.
+
+v0.14.3's action replaces the `qualified`-only receipt assertion with `check-open-pack-selection.sh`. It accepts `qualified` or `compatible` receipts whose releases all have verified integrity and qualified, limited, or pending behavior. Each rejection names its reason, and the qualification is recorded in the job summary and as `bifrost.packSelection` in the SARIF run properties. Its unchanged default pin (rules 0.5.1 behavior `limited`, packs 0.6.0 behavior `pending`, both integrity `verified`) therefore passes. The workflow keeps default inputs.
