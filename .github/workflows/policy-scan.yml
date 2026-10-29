@@ -24,11 +24,14 @@ jobs:
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
       - uses: BrokkAi/bifrost-policy-scan@2e462a5512cab6207d81a53bcae142763a4212d5 # v0 (v0.14.3)
         with:
-          # On v0.14.3 these default code-smell policies report
-          # capability_incomplete on this workspace's Rust and Python sources,
-          # which makes the whole scan UNRELIABLE. Exclude them explicitly so an
-          # incomplete rule is never mistaken for a clean finding set; the
-          # exclusion is recorded in the report's evaluation context.
+          # Workaround: on this workspace's Rust and Python sources these default
+          # policies return an `inconclusive` verdict (capability_incomplete).
+          # An inconclusive run is still a verdict and its findings are still
+          # valid, but v0.14.3 exits 2 (UNRELIABLE) on any inconclusive run and
+          # fails the job. Excluding them also drops any findings they would
+          # report, so remove this list once the action stops failing on
+          # inconclusive runs. The exclusion is recorded in the report's
+          # evaluation context.
           exclude-policy-ids: >-
             bifrost.correctness.contradictory-condition
             bifrost.correctness.discarded-pure-result
