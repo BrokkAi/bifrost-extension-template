@@ -78,3 +78,55 @@ The runtime dependency remains registry-only and exact. The example continues to
 ## Policy selection follow-up (2026-09-28)
 
 The v0.11.5 action scan on PR #5 was `UNRELIABLE` because `bifrost.correctness.python-absent-member` reported `capability_incomplete` on this workspace. The workflow now uses the action's `policy-ids` selector to run the other 16 members of `bifrost.code-smells`. This is an explicit selection decision, not a finding suppression or a completeness override. Verify the exact new PR head in CI before qualifying the policy gate.
+
+## v0.14.0 update (2026-10-23)
+
+- [x] Started from `main` at `02c97c3` on `dave/template-bifrost-v0140-0ad1b1`.
+- [x] Verified published `brokk-bifrost-runtime` 0.14.0; its crates.io source revision is `267e76caf3b7cbee937109b94ba5100d56181178`. `bifrost-policy-scan` tags `v0` and `v0.14.0` both resolve to `9e63f06687f41a011acf7384638756c396796936`.
+- [x] Raised the toolchain to Rust 1.99.1 (`rust-version = "1.99"`); the 0.14.0 analyzer and language crates require Rust 1.99.
+- [x] Refreshed the exact runtime lockfile and regenerated the 379-record dependency/license inventory.
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `71e59a0c…`.
+- [ ] Repeat the locked build and tests from a clean source-only copy without Git metadata or a Bifrost checkout.
+- [ ] Verify cross-platform PR CI and the policy-scan action on the new head.
+
+Surprises: the public `extension` re-exports and `EXTENSION_API_VERSION` are unchanged from 0.11.5, so the lifecycle compiles without source changes. 0.14.0 adds `StableDigest::sha256`, which now replaces the template's one-shot digest helpers. The 0.11.5 update left `BIFROST_PACKAGE_REVISION` at the 0.11.0 source revision; it now names the 0.14.0 revision. The new dependency graph introduces `version-ranges` under MPL-2.0, the first file-level copyleft license in the inventory; review it in the final distribution audit. Rust 1.99's pedantic `unused_async_trait_impl` lint rejects the `ServerHandler` impl that `rmcp`'s `tool_router(server_handler)` emits (still the case in rmcp 3.7.0), so the MCP example now writes that impl explicitly with `#[tool_handler]` and a scoped allow. On macOS, debug binaries now print a non-fatal `linker_messages` warning about the `__eh_frame` size.
+
+Decision: the first PR #6 policy scan failed before evaluation with `Open-pack acquisition failed: incompatible-strict-selection`. The engine ships no rules; the action's default `packs-source` pin is public rules 0.1.1, a manifest schema 1 release, while the 0.14.0 engine accepts only schema 2. The workflow now pins `packs-source` to rules 0.5.1 (`pack-release.json` SHA-256 `e607e5c3…`) and its native dependency packs 0.6.0 (`dd8888f7…`), the releases published for Bifrost 0.14.0. In rules 0.5.1, `bifrost.correctness.python-absent-member` is `activation: opt-in` and no longer runs with the default `bifrost.code-smells` pack (4.0.0), so the former `policy-ids` allowlist and the interim exclusion are both removed. The workflow now runs the default pack.
+
+Discovery (2026-10-23): with the 0.5.1 pin, three consecutive PR scans failed acquisition as `unavailable`. A temporary step that printed the action's receipt showed `pack source rate limit reached` (retryable). With an explicit source, the 0.14.0 engine downloads each release asset through `api.github.com/repos/.../releases/assets/{id}` without credentials, so it shares the anonymous 60-requests-per-hour limit of the runner's IP. The action refuses `packs-token` on `pull_request` events, so this repository cannot authenticate PR acquisition. The scan is therefore unreliable on PRs until upstream acquisition authenticates public downloads, uses non-API download URLs, or publishes an inventory mirror. Choosing between waiting for upstream and changing this workflow's trigger or gating is an open decision.
+
+## v0.14.1 update (2026-10-26)
+
+- [x] Verified published `brokk-bifrost-runtime` 0.14.1; its crates.io source revision is `c9c16c8dad594c2d933bace29747fddcfd7647ed`. `bifrost-policy-scan` tags `v0` and `v0.14.1` both resolve to `e354f00167404ab508f13beb45144a46f3213b35`.
+- [x] The runtime crate's `src/` is byte-identical to 0.14.0 and still requires Rust 1.99, so only pins, the lockfile, the 380-record license inventory, CI dependency assertions, and the cache key changed.
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `4ceccd70…`.
+- [ ] Verify cross-platform PR CI on the new head.
+
+The action's `action.yml` differs from v0.14.1's predecessor only in its default engine version. Its default `packs-source` pin is still public rules 0.1.1, which 0.14.x engines refuse, so the workflow keeps the rules 0.5.1 / packs 0.6.0 pin. 0.14.1 admits every rules 0.5.1 policy, but the newly admitted ones are opt-in and do not change the default `bifrost.code-smells` run. PR acquisition still downloads release assets through the anonymous `api.github.com` API, so the PR policy scan remains subject to the rate limit described above until upstream fixes it.
+
+## v0.14.2 update (2026-10-27)
+
+- [x] Verified published `brokk-bifrost-runtime` 0.14.2; its crates.io source revision is `073c23790739e33f33abc98338651689eaf8b7c0`, and its `src/` is byte-identical to 0.14.1. `bifrost-policy-scan` tags `v0` and `v0.14.2` both resolve to `c4babd131eedee9baee6962380f01792daf10c35`.
+- [x] Refreshed the exact runtime lockfile and the license inventory.
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the 380-record dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `ff31aeae…`.
+- [ ] Verify cross-platform PR CI and the policy scan on the new head.
+
+v0.14.2 resolves the upstream acquisition defects recorded above. The action's default `packs-source` is now rules 0.5.1 / packs 0.6.0 with the same manifest digests this workflow pinned, guarded by a release check that the installed engine admits it. The action passes the job's `github.token` for public sources outside the scanning repository on every event, PRs included. The engine downloads public `bifrost-packs` assets from `github.com` release URLs rather than the API and resolves tags from one listing. Acquisition failures now print the receipt's message. The workflow therefore drops its `packs-source` override and runs the action with default inputs.
+
+## v0.14.3 update (2026-10-29)
+
+- [x] Verified published `brokk-bifrost-runtime` 0.14.3; its `src/` is byte-identical to 0.14.2. `bifrost-policy-scan` tags `v0` and `v0.14.3` both resolve to `2e462a5512cab6207d81a53bcae142763a4212d5`.
+- [x] Refreshed the exact runtime lockfile and the 381-record license inventory (adds `sha1`, MIT OR Apache-2.0).
+- [x] Passed formatting, 11 workspace tests, strict Clippy, the dependency audit, exact registry-source proof, and lifecycle run/verify/reproduce; the reproduced cold manifest matched `75ffc204…`.
+- [ ] Verify cross-platform PR CI and the policy scan on the new head.
+
+The 0.14.3 release is partial: npm and PyPI publication failed on oversized binaries. This repository uses neither. It consumes the crates.io packages, which resolve at 0.14.3, and the action installs the engine from the GitHub Release archives with their `.sha256` files, which are published for every platform.
+
+Surprise: from 0.14.3 the release publishes pre-built qualified `.crate` artifacts that carry no `.cargo_vcs_info.json`, so crates.io no longer records the source revision. The release run's runtime publish job names `RELEASE_COMMIT` `234c701a3605519c656a10b7cc29396306b124d9`, the `v0.14.3` tag commit, and `BIFROST_PACKAGE_REVISION` now records that.
+
+v0.14.3's action replaces the `qualified`-only receipt assertion with `check-open-pack-selection.sh`. It accepts `qualified` or `compatible` receipts whose releases all have verified integrity and qualified, limited, or pending behavior. Each rejection names its reason, and the qualification is recorded in the job summary and as `bifrost.packSelection` in the SARIF run properties. Its unchanged default pin (rules 0.5.1 behavior `limited`, packs 0.6.0 behavior `pending`, both integrity `verified`) therefore passes. The workflow keeps default inputs.
+
+Decision (2026-10-29): with v0.14.3 the PR scan acquired the default pin, ran every default `bifrost.code-smells` policy, and exited 2 (`UNRELIABLE`). Six policies reported `inconclusive` / `capability_incomplete` with `run_incomplete` diagnostics on this workspace: `contradictory-condition` (branch-relation derivation), `discarded-pure-result` and `ignored-status-result` (call-shape coverage and result-obligation derivation), `overwritten-unread-value` (flow-state axis, plus `report_retention_budget`), `unreachable-statement` (statement-reachability derivation), and `performance.file-read-in-loop` (lexical environment in `tests/lifecycle.rs`). Following the v0.11.5 precedent, the workflow excludes exactly these through `exclude-policy-ids`, which the action records in the report's evaluation context. This is an explicit selection decision, not a finding suppression or a completeness override. Drop each exclusion once a release completes that policy here.
+
+Correction (2026-10-29): the six runs were not failures. `inconclusive` is Bifrost's own verdict: the run could not prove there is nothing more to find, and the findings it retains are still valid. SlopCop's check contract treats an inconclusive verdict as non-blocking and lets findings take precedence over incompleteness. The v0.14.3 engine instead exits 2 whenever a run is not `complete`, `proven_subset`, or `proven_by_summary`, even when an inconclusive run retained a gating finding, and the action turns that into UNRELIABLE. The exclusion is therefore a workaround for the exit-code contract. It costs those six policies' findings too. Remove the whole list once a release's action passes inconclusive runs and gates on their findings.
+

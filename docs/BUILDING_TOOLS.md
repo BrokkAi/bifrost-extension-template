@@ -13,7 +13,7 @@ Start with the exact published Bifrost runtime package plus serialization crates
 
 ```toml
 [dependencies]
-brokk-bifrost-runtime = "=0.11.5"
+brokk-bifrost-runtime = "=0.14.3"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.145"
 sha2 = "0.10.8"

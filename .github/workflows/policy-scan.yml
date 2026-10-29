@@ -22,25 +22,20 @@ jobs:
       # SHA-pinned, so the example pins the commit `v0` currently names and
       # keeps the tag in the comment. Copy `@v0` for a gate that tracks
       # releases; pin a commit or an exact `vX.Y.Z` tag for a reproducible one.
-      - uses: BrokkAi/bifrost-policy-scan@3a5fc1465ca249e6cf5b8240f174819890b75351 # v0 (v0.11.5)
+      - uses: BrokkAi/bifrost-policy-scan@2e462a5512cab6207d81a53bcae142763a4212d5 # v0 (v0.14.3)
         with:
-          # v0.11.5's python-absent-member rule reports capability_incomplete
-          # for this workspace. Select the remaining code-smell rules explicitly
-          # so an incomplete rule is never mistaken for a clean finding set.
-          policy-ids: >-
-            bifrost.correctness.dynamic-evaluation
-            bifrost.correctness.unsafe-deserialization
-            bifrost.correctness.go-data-race
-            bifrost.correctness.go-nil-dereference
-            bifrost.correctness.go-wrong-error-on-failure-path
-            bifrost.correctness.rayon-in-blocking-lazy-init
-            bifrost.performance.loop-invariant-sort
-            bifrost.performance.regex-compile-in-loop
+          # Workaround: on this workspace's Rust and Python sources these default
+          # policies return an `inconclusive` verdict (capability_incomplete).
+          # An inconclusive run is still a verdict and its findings are still
+          # valid, but v0.14.3 exits 2 (UNRELIABLE) on any inconclusive run and
+          # fails the job. Excluding them also drops any findings they would
+          # report, so remove this list once the action stops failing on
+          # inconclusive runs. The exclusion is recorded in the report's
+          # evaluation context.
+          exclude-policy-ids: >-
+            bifrost.correctness.contradictory-condition
+            bifrost.correctness.discarded-pure-result
+            bifrost.correctness.ignored-status-result
+            bifrost.correctness.overwritten-unread-value
+            bifrost.correctness.unreachable-statement
             bifrost.performance.file-read-in-loop
-            bifrost.performance.serialization-in-loop
-            bifrost.performance.parsing-in-loop
-            bifrost.performance.database-call-in-loop
-            bifrost.performance.network-call-in-loop
-            bifrost.performance.subprocess-in-loop
-            bifrost.performance.sleep-in-loop
-            bifrost.performance.expensive-operation-in-nested-loop

@@ -114,15 +114,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "arbitrary"
-version = "1.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3d036a3c4ab069c7b410a2ce876bd74808d2d0888a82667669f8e783a898bf1"
-dependencies = [
- "derive_arbitrary",
-]
-
-[[package]]
 name = "arc-swap"
 version = "1.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -245,13 +236,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc0b364ead1874514c8c2855ab558056ebfeb775653e7ae45ff72f28f8f3166c"
 
 [[package]]
-name = "brokk-bifrost-analysis"
-version = "0.11.5"
+name = "boxcar"
+version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0309e03f1c51562ca7c954fbb7a94779374f38711c99674c1b00e32510f104a4"
+checksum = "36f64beae40a84da1b4b26ff2761a5b895c12adc41dc25aaee1c4f2bbfe97a6e"
+
+[[package]]
+name = "brokk-bifrost-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "69888b7016ade001c39ae11efd16dd45817c882cd97c9a168de9c2374d65104f"
 dependencies = [
  "arc-swap",
- "bincode",
  "brokk-bifrost-core",
  "brokk-bifrost-cpp",
  "brokk-bifrost-csharp",
@@ -262,19 +258,19 @@ dependencies = [
  "brokk-bifrost-python",
  "brokk-bifrost-ruby",
  "brokk-bifrost-rust",
+ "brokk-bifrost-semantic",
+ "brokk-bifrost-store",
  "brokk-tree-sitter-c-sharp",
+ "brokk-tree-sitter-cpp",
  "brokk-tree-sitter-javascript",
  "brokk-tree-sitter-json",
  "brokk-tree-sitter-rust",
+ "brokk-tree-sitter-typescript",
  "cap-fs-ext",
  "cap-std",
- "chrono",
  "flate2",
  "git2",
  "glob",
- "goblin",
- "growable-bloom-filter",
- "jclassfile",
  "jsonschema",
  "libc",
  "moka",
@@ -282,45 +278,33 @@ dependencies = [
  "rayon",
  "regex",
  "regex-syntax",
- "rubund",
  "rusqlite",
  "rustc-hash",
- "rustdoc-types",
  "schemars",
  "semver",
  "serde",
  "serde-saphyr",
  "serde_json",
- "serde_json_canonicalizer",
  "sha2",
- "spdx",
  "tar",
  "tempfile",
- "toml",
  "toml_edit",
  "tree-sitter",
- "tree-sitter-cpp",
  "tree-sitter-go",
  "tree-sitter-java",
- "tree-sitter-php",
  "tree-sitter-properties",
  "tree-sitter-python",
- "tree-sitter-rbs",
  "tree-sitter-ruby",
- "tree-sitter-typescript",
  "tree-sitter-yaml",
- "url",
  "uuid",
- "walkdir",
- "windows-sys 0.61.2",
  "zip",
 ]
 
 [[package]]
 name = "brokk-bifrost-core"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "caee8ca7cad58f0b9e2847b3a694403dbdd2c80f9703915db5684592006b4ca4"
+checksum = "e1f0a1481ee247d2b267e32732a362d0d4e3cf4b83296a593b5c5ef960c837ca"
 dependencies = [
  "bincode",
  "git2",
@@ -340,28 +324,49 @@ dependencies = [
  "tempfile",
  "tree-sitter",
  "walkdir",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
 name = "brokk-bifrost-cpp"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d9a7970a4f72404a0f9e3ac8e950525405e9b69f0ca08f26d007c1b97e97435"
+checksum = "976bed055c8b5220cecbc5a08e9ca8e3732294e422bea55c1482d6ddbbe283b6"
 dependencies = [
  "brokk-bifrost-core",
+ "brokk-tree-sitter-cpp",
  "regex",
  "serde",
  "serde_json",
  "shlex 2.0.1",
  "tree-sitter",
- "tree-sitter-cpp",
+]
+
+[[package]]
+name = "brokk-bifrost-cpp-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6af5d63c787acc2d73ccb2e5374f4b8ce80f7e2f1636f4695ea664b7966af77"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-cpp",
+ "brokk-tree-sitter-cpp",
+ "git2",
+ "moka",
+ "rayon",
+ "rusqlite",
+ "semver",
+ "serde_json",
+ "tempfile",
+ "tree-sitter",
 ]
 
 [[package]]
 name = "brokk-bifrost-csharp"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7af2cb2abfc15562c336205b059bd1193a27720a26c7aa37a65133062490b303"
+checksum = "92f8081c985e9bd9178711ed38f78b1c8c781c824719e984f2e6849c627a87f0"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-c-sharp",
@@ -370,88 +375,212 @@ dependencies = [
 ]
 
 [[package]]
-name = "brokk-bifrost-flow"
-version = "0.11.5"
+name = "brokk-bifrost-csharp-analysis"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d39151546921a44037c09606e69a4af47053521c093c6705dfc682fd33f3943"
+checksum = "252b292b76be706a65ade0616588cb88b50d89becdaea5643d6a5db5c7c2681b"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-csharp",
+ "brokk-bifrost-semantic",
+ "brokk-tree-sitter-c-sharp",
+ "goblin",
+ "moka",
+ "quick-xml",
+ "rayon",
+ "semver",
+ "serde_json",
+ "sha1",
+ "sha2",
+ "tempfile",
+ "tree-sitter",
+ "walkdir",
+]
+
+[[package]]
+name = "brokk-bifrost-flow"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c8ff40ebd723683a16545400e9dbb6eed84c519e8c0d458a9ccc67bbeb6cc987"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
  "serde",
  "serde_json",
  "sha2",
+ "tempfile",
+ "tree-sitter",
 ]
 
 [[package]]
 name = "brokk-bifrost-go"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa36d34ae08551c389cc5758426ee57163d440b4cc3adbe323f41879d15f9240"
+checksum = "52f9add05c1cc15d51b34a90fa36b2867b00fb0a86dd83fc8294e19644df1c89"
 dependencies = [
  "brokk-bifrost-core",
- "rayon",
  "regex",
+ "serde",
+ "tree-sitter",
+ "tree-sitter-go",
+]
+
+[[package]]
+name = "brokk-bifrost-go-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cd0a9f4a323ca86102cdef321265f9167fb303247c40f1b76069adcda84326de"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-go",
+ "brokk-bifrost-semantic",
+ "git2",
+ "moka",
+ "rusqlite",
+ "schemars",
+ "semver",
+ "serde",
+ "serde_json",
+ "tempfile",
  "tree-sitter",
  "tree-sitter-go",
 ]
 
 [[package]]
 name = "brokk-bifrost-js-ts"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "472611f50735789c8af11cf8425be2e1a813b7951daa6a8fec8f19c5057b29c5"
+checksum = "d8d6aefa5f97943f63ed3a8a39aac4056159f261cda6ee7bc3422309fe2792d7"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-javascript",
+ "brokk-tree-sitter-typescript",
+ "js-semver",
  "rayon",
- "regex",
  "serde_json",
  "tree-sitter",
- "tree-sitter-typescript",
+]
+
+[[package]]
+name = "brokk-bifrost-js-ts-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "00970b9b18f287f78c5c98284538906f8cb5c08a3135e8d8d14dceec889466eb"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-js-ts",
+ "brokk-bifrost-semantic",
+ "brokk-tree-sitter-javascript",
+ "brokk-tree-sitter-typescript",
+ "git2",
+ "glob",
+ "moka",
+ "rusqlite",
+ "semver",
+ "serde-saphyr",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "tree-sitter",
+ "tree-sitter-yarnlock",
+ "yarn-lock-parser",
 ]
 
 [[package]]
 name = "brokk-bifrost-jvm"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2532d0bf85c28848ddea07f0b16e0fcfa97451e8eda86bf3886d4b4705c0736"
+checksum = "bac113cefe845644a950f40e208e2eea3e497a59c41ce0ab21961db07426417e"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-kotlin",
+ "brokk-tree-sitter-scala",
+ "moka",
  "regex",
  "serde",
  "serde_json",
  "tree-sitter",
  "tree-sitter-java",
- "tree-sitter-scala",
+ "tree-sitter-javadoc",
+]
+
+[[package]]
+name = "brokk-bifrost-jvm-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c4d7fc26e281cb9a592bbb5489a9c6c2fe414319ab4a969c2dbff37710f82bf1"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-jvm",
+ "brokk-bifrost-semantic",
+ "git2",
+ "jclassfile",
+ "moka",
+ "rayon",
+ "rusqlite",
+ "schemars",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "tree-sitter",
+ "tree-sitter-java",
+ "zip",
 ]
 
 [[package]]
 name = "brokk-bifrost-php"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fdd64042b2d19a6d8522e4d93ead82a3f526f242d7ba796f14f2b4a8222ef951"
+checksum = "7153d498672e96dee9226e8023ede692ec48e4c90336d150a3b125e7e7acf9aa"
 dependencies = [
  "brokk-bifrost-core",
+ "brokk-tree-sitter-php",
  "mago-allocator",
  "mago-database",
  "mago-phpdoc-syntax",
- "moka",
  "regex",
  "serde_json",
  "tree-sitter",
- "tree-sitter-php",
+]
+
+[[package]]
+name = "brokk-bifrost-php-analysis"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "edbcf12bd6394384928d8c39e3f5dc99b9529445aed8fabb119bda78398497b1"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-php",
+ "brokk-bifrost-semantic",
+ "brokk-tree-sitter-php",
+ "git2",
+ "moka",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tree-sitter",
 ]
 
 [[package]]
 name = "brokk-bifrost-policy"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45bffe64f1ef941f04ff8a043c66469e704cb60abe0ce8bf72dfd36a0b9bff83"
+checksum = "4e501605c70e4001d945e5c158c5e3e3fd82b63fe4216cb1647afd9be1b16289"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-flow",
  "brokk-bifrost-rql",
+ "brokk-bifrost-rust-analysis",
+ "brokk-bifrost-tools",
  "cap-std",
  "chrono",
  "cvss",
@@ -466,41 +595,87 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-python"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7a865d9593812fd5297ee0276d0d2069e9f67e1106f287df9ec4e25b598b44e"
+checksum = "f1e5a54277bd4db9b4afbbb2e47d0712f4593d6692776e15161d830601d908ae"
 dependencies = [
  "brokk-bifrost-core",
- "rayon",
  "regex",
  "toml",
+ "tracing",
  "tree-sitter",
  "tree-sitter-python",
 ]
 
 [[package]]
-name = "brokk-bifrost-rql"
-version = "0.11.5"
+name = "brokk-bifrost-python-analysis"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5cdebe45248dc69de859d25a71e97c3e46dbaf222cd21548fd968019a1efdb6"
+checksum = "ede3df12a3a4d5e927929e70b063294d87e3ab60124b38caf2b4281b9a883f76"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-core",
+ "brokk-bifrost-python",
+ "brokk-bifrost-semantic",
+ "configparser",
+ "git2",
+ "moka",
+ "pep440_rs",
+ "pep508_rs",
+ "rusqlite",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "shlex 2.0.1",
+ "tempfile",
+ "toml",
+ "toml_edit",
+ "tree-sitter",
+ "tree-sitter-python",
+ "zip",
+]
+
+[[package]]
+name = "brokk-bifrost-rql"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7721a36da1e9a2c3d1e4c7fad483b432f07a1336fbf6e10a9bf53a63a18d29b1"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-cpp",
+ "brokk-bifrost-cpp-analysis",
+ "brokk-bifrost-csharp-analysis",
  "brokk-bifrost-flow",
+ "brokk-bifrost-go-analysis",
+ "brokk-bifrost-js-ts",
+ "brokk-bifrost-js-ts-analysis",
+ "brokk-bifrost-jvm",
+ "brokk-bifrost-jvm-analysis",
+ "brokk-bifrost-php-analysis",
+ "brokk-bifrost-python",
+ "brokk-bifrost-python-analysis",
+ "brokk-bifrost-ruby-analysis",
+ "brokk-bifrost-rust-analysis",
+ "brokk-bifrost-tools",
  "glob",
  "regex",
  "regex-syntax",
+ "schemars",
+ "semver",
  "serde",
  "serde_json",
  "sha2",
  "strsim",
+ "tree-sitter",
 ]
 
 [[package]]
 name = "brokk-bifrost-ruby"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "11ea0e17ccba861ca678a69ade96148aef5748c47c191597f8a90b2ce83ce53f"
+checksum = "9ce5822a654a080effededf6a4ab97677b2a336ed153202791f84fea036b728b"
 dependencies = [
  "brokk-bifrost-core",
  "serde_json",
@@ -509,10 +684,32 @@ dependencies = [
 ]
 
 [[package]]
-name = "brokk-bifrost-runtime"
-version = "0.11.5"
+name = "brokk-bifrost-ruby-analysis"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "94ac27d2cde569007748a2329ba7bf264cbd908f3fda0f49ccd1726a8c85ad52"
+checksum = "740c4341727cf40b6a55edf58ff29b958c1459c8cf856b6d51b889add4ff7c5a"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-ruby",
+ "flate2",
+ "git2",
+ "moka",
+ "rubund",
+ "rusqlite",
+ "semver",
+ "tar",
+ "tempfile",
+ "tree-sitter",
+ "tree-sitter-rbs",
+ "tree-sitter-ruby",
+]
+
+[[package]]
+name = "brokk-bifrost-runtime"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01143283786513ad6757e9f23fd8ffbb90e76d8f0c985fd32a02a341ad45ae9a"
 dependencies = [
  "brokk-bifrost-analysis",
  "brokk-bifrost-flow",
@@ -525,12 +722,13 @@ dependencies = [
 
 [[package]]
 name = "brokk-bifrost-rust"
-version = "0.11.5"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c3470dcd18cc12d5cc12bdacd12751c48cd36c84a434b37a753e1e7f53c87c6"
+checksum = "77a6e86fc63bd9200544c85fc7d2002ae3536a214dde98b43772c530e68b18b1"
 dependencies = [
  "brokk-bifrost-core",
  "brokk-tree-sitter-rust",
+ "cfg-expr",
  "git2",
  "glob",
  "moka",
@@ -541,10 +739,165 @@ dependencies = [
 ]
 
 [[package]]
-name = "brokk-tree-sitter-c-sharp"
-version = "0.23.7"
+name = "brokk-bifrost-rust-analysis"
+version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02f541882a165967f27a2bd0b62ddd7192c59ea81a39d1db1659239e469ec880"
+checksum = "4fdc3078acf8460072a9f071b92e84e0e7641eb59681fb99e4b19f036a3757ed"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-rust",
+ "brokk-bifrost-semantic",
+ "brokk-tree-sitter-rust",
+ "git2",
+ "glob",
+ "moka",
+ "rayon",
+ "rusqlite",
+ "rustdoc-types",
+ "semver",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "toml",
+ "toml_edit",
+ "tree-sitter",
+]
+
+[[package]]
+name = "brokk-bifrost-semantic"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "893b3a930d8d857c6f2a6d42fbc763682d93c968ebcfc3326566e9174ebd2c10"
+dependencies = [
+ "brokk-bifrost-core",
+ "brokk-bifrost-cpp",
+ "brokk-bifrost-csharp",
+ "brokk-bifrost-go",
+ "brokk-bifrost-js-ts",
+ "brokk-bifrost-jvm",
+ "brokk-bifrost-php",
+ "brokk-bifrost-python",
+ "brokk-bifrost-ruby",
+ "brokk-bifrost-rust",
+ "flate2",
+ "git2",
+ "jsonschema",
+ "moka",
+ "rusqlite",
+ "schemars",
+ "semver",
+ "serde",
+ "serde-saphyr",
+ "serde_json",
+ "serde_json_canonicalizer",
+ "sha2",
+ "spdx",
+ "tempfile",
+ "tree-sitter",
+ "url",
+]
+
+[[package]]
+name = "brokk-bifrost-store"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b71b033fbe8d323ad1ce11892faadf0ab830cc0bdacaa59abca22f82be2e654"
+dependencies = [
+ "bincode",
+ "brokk-bifrost-core",
+ "brokk-bifrost-cpp",
+ "brokk-bifrost-csharp",
+ "brokk-bifrost-go",
+ "brokk-bifrost-js-ts",
+ "brokk-bifrost-jvm",
+ "brokk-bifrost-php",
+ "brokk-bifrost-python",
+ "brokk-bifrost-ruby",
+ "brokk-bifrost-rust",
+ "brokk-bifrost-semantic",
+ "brokk-tree-sitter-c-sharp",
+ "brokk-tree-sitter-cpp",
+ "brokk-tree-sitter-javascript",
+ "brokk-tree-sitter-php",
+ "brokk-tree-sitter-rust",
+ "brokk-tree-sitter-typescript",
+ "git2",
+ "growable-bloom-filter",
+ "moka",
+ "quick-xml",
+ "rayon",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "toml",
+ "tree-sitter",
+ "tree-sitter-go",
+ "tree-sitter-java",
+ "tree-sitter-python",
+ "url",
+ "uuid",
+ "walkdir",
+]
+
+[[package]]
+name = "brokk-bifrost-tools"
+version = "0.14.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53f105c50c5fc8ecc2edcb268fb11e3794e28b4ad2ba33305c9da5371a91793c"
+dependencies = [
+ "brokk-bifrost-analysis",
+ "brokk-bifrost-core",
+ "brokk-bifrost-cpp",
+ "brokk-bifrost-cpp-analysis",
+ "brokk-bifrost-csharp-analysis",
+ "brokk-bifrost-go",
+ "brokk-bifrost-go-analysis",
+ "brokk-bifrost-js-ts-analysis",
+ "brokk-bifrost-jvm-analysis",
+ "brokk-bifrost-php",
+ "brokk-bifrost-php-analysis",
+ "brokk-bifrost-python",
+ "brokk-bifrost-python-analysis",
+ "brokk-bifrost-ruby-analysis",
+ "brokk-bifrost-rust",
+ "brokk-bifrost-rust-analysis",
+ "brokk-tree-sitter-json",
+ "chrono",
+ "git2",
+ "glob",
+ "moka",
+ "rayon",
+ "regex",
+ "rusqlite",
+ "schemars",
+ "semver",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tree-sitter",
+ "tree-sitter-properties",
+ "tree-sitter-yaml",
+ "walkdir",
+]
+
+[[package]]
+name = "brokk-tree-sitter-c-sharp"
+version = "0.23.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "282fd84a7c46638a01b2aaa4efaf6a48164e17c83af9dc07b3938a9efa2a3e82"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "brokk-tree-sitter-cpp"
+version = "0.24.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f2e30d0312deaa1f5e5250b0bf0c92f7d0c62b96075a29cd708a64af60fccd1a"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -552,9 +905,9 @@ dependencies = [
 
 [[package]]
 name = "brokk-tree-sitter-javascript"
-version = "0.25.1"
+version = "0.25.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1313f5d023fdd87e5300a7d9320ba899e46474ec2172a956eca9435e1d710644"
+checksum = "19a9b14ee3e16dfcb68c7b893da4f3beb43d11d2f2df7b6ecf73e7fce9edab10"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -581,10 +934,40 @@ dependencies = [
 ]
 
 [[package]]
-name = "brokk-tree-sitter-rust"
-version = "0.24.3"
+name = "brokk-tree-sitter-php"
+version = "0.24.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7045d6b0c95d4e9b55a7c11776aef0bd46040f7a8d28ec2f92e6a89e4130512c"
+checksum = "fb53fcec0553218f70e7e440850ee7fb0b385da62e25e3b5cbf9f0646b6e03bf"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "brokk-tree-sitter-rust"
+version = "0.24.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e24de9cec3030bfde3ff394bbd196406f4d1513e18b25d3d4f65fa0bd81d17eb"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "brokk-tree-sitter-scala"
+version = "0.26.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c54a72146c840c69bef6f53fff5f76d4d90da8736fdbb52b67c9dacaeda60f5"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "brokk-tree-sitter-typescript"
+version = "0.23.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "05ed7ca26b2dfd1af1a2d9072f34326caa8b97836572c4e007d183b51d51b2f8"
 dependencies = [
  "cc",
  "tree-sitter-language",
@@ -679,10 +1062,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6d43a04d8753f35258c91f8ec639f792891f748a1edbd759cf1dcea3382ad83c"
 
 [[package]]
+name = "cfg-expr"
+version = "0.20.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9ba9e9ec16c447027685b1f897b720e18e9a8afd00bd7332c483537e38086c9f"
+dependencies = [
+ "smallvec",
+]
+
+[[package]]
 name = "cfg-if"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801"
+
+[[package]]
+name = "cfg_aliases"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f079e83a288787bcd14a6aea84cee5c87a67c5a3e660c30f557a3d24761b3527"
 
 [[package]]
 name = "chrono"
@@ -741,6 +1139,12 @@ name = "colorchoice"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570"
+
+[[package]]
+name = "configparser"
+version = "3.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "031ad3d167622974ed636505ae4556267ed4aa2aea0464122fa6bc9698a32825"
 
 [[package]]
 name = "core-foundation-sys"
@@ -861,17 +1265,6 @@ name = "derive-new"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2cdc8d50f426189eef89dac62fabfa0abb27d5cc008f25bf4156a0203325becc"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.119",
-]
-
-[[package]]
-name = "derive_arbitrary"
-version = "1.4.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1e567bd82dcff979e4b03460c307b3cdc9e96fde3d73bed1496d2bc75d9dd62a"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1514,6 +1907,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a6cb138bb79a146c1bd460005623e142ef0181e3d0219cb493e02f7d08a35695"
 
 [[package]]
+name = "itertools"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1541,6 +1943,12 @@ dependencies = [
  "getrandom 0.4.3",
  "libc",
 ]
+
+[[package]]
+name = "js-semver"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b45bf431971205e414201e87a76bdd4c75316dc44c890e9df4d9006ee5d2896c"
 
 [[package]]
 name = "js-sys"
@@ -1846,6 +2254,36 @@ dependencies = [
 ]
 
 [[package]]
+name = "nix"
+version = "0.31.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf20d2fde8ff38632c426f1165ed7436270b44f199fc55284c38276f9db47c3d"
+dependencies = [
+ "bitflags 2.13.1",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
+]
+
+[[package]]
+name = "nom"
+version = "8.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df9761775871bdef83bee530e60050f7e54b1105350d6884eb0fb4f46c2f9405"
+dependencies = [
+ "memchr",
+]
+
+[[package]]
+name = "nom-language"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2de2bc5b451bfedaef92c90b8939a8fff5770bdcc1fafd6239d086aab8fa6b29"
+dependencies = [
+ "nom",
+]
+
+[[package]]
 name = "notify"
 version = "8.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2006,6 +2444,41 @@ name = "pastey"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2ee67f1008b1ba2321834326597b8e186293b049a023cdef258527550b9935b4"
+
+[[package]]
+name = "pep440_rs"
+version = "0.7.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31095ca1f396e3de32745f42b20deef7bc09077f918b085307e8eab6ddd8fb9c"
+dependencies = [
+ "once_cell",
+ "serde",
+ "unicode-width",
+ "unscanny",
+ "version-ranges",
+]
+
+[[package]]
+name = "pep508_rs"
+version = "0.9.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "faee7227064121fcadcd2ff788ea26f0d8f2bd23a0574da11eca23bc935bcc05"
+dependencies = [
+ "boxcar",
+ "indexmap",
+ "itertools",
+ "once_cell",
+ "pep440_rs",
+ "regex",
+ "rustc-hash",
+ "serde",
+ "smallvec",
+ "thiserror 1.0.69",
+ "unicode-width",
+ "url",
+ "urlencoding",
+ "version-ranges",
+]
 
 [[package]]
 name = "percent-encoding"
@@ -2210,7 +2683,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
- "thiserror",
+ "thiserror 2.0.20",
  "tokio",
  "tokio-util",
  "tracing",
@@ -2481,6 +2954,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "sha1"
+version = "0.10.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a978451301f4db1d02937a4ab3ccce137717b81826e79b7d49ffe3244a13c3b8"
+dependencies = [
+ "cfg-if",
+ "cpufeatures",
+ "digest",
+]
+
+[[package]]
 name = "sha2"
 version = "0.10.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2633,11 +3117,31 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
+dependencies = [
+ "thiserror-impl 1.0.69",
+]
+
+[[package]]
+name = "thiserror"
 version = "2.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec86235f5fcc2a73650310756d2ac5b138a5780bbbdfae3eeccec992c435ba4f"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 2.0.20",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.69"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
 ]
 
 [[package]]
@@ -2784,16 +3288,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-cpp"
-version = "0.23.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "df2196ea9d47b4ab4a31b9297eaa5a5d19a0b121dceb9f118f6790ad0ab94743"
-dependencies = [
- "cc",
- "tree-sitter-language",
-]
-
-[[package]]
 name = "tree-sitter-go"
 version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2814,20 +3308,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-language"
-version = "0.1.7"
+name = "tree-sitter-javadoc"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "009994f150cc0cd50ff54917d5bc8bffe8cad10ca10d81c34da2ec421ae61782"
-
-[[package]]
-name = "tree-sitter-php"
-version = "0.23.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f066e94e9272cfe4f1dcb07a1c50c66097eca648f2d7233d299c8ae9ed8c130c"
+checksum = "f383b40994c833d8fb85ca2e0b04ed20b6551846cdfbc39a184ef1fd0880b403"
 dependencies = [
  "cc",
  "tree-sitter-language",
 ]
+
+[[package]]
+name = "tree-sitter-language"
+version = "0.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "009994f150cc0cd50ff54917d5bc8bffe8cad10ca10d81c34da2ec421ae61782"
 
 [[package]]
 name = "tree-sitter-properties"
@@ -2871,26 +3365,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-scala"
-version = "0.26.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24e0ab4505990bfe30051761d40a7bf4033ce5a81c9eda9e20e987a5cdc84826"
-dependencies = [
- "cc",
- "tree-sitter-language",
-]
-
-[[package]]
-name = "tree-sitter-typescript"
-version = "0.23.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c5f76ed8d947a75cc446d5fccd8b602ebf0cde64ccf2ffa434d873d7a575eff"
-dependencies = [
- "cc",
- "tree-sitter-language",
-]
-
-[[package]]
 name = "tree-sitter-yaml"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2899,6 +3373,22 @@ dependencies = [
  "cc",
  "tree-sitter-language",
 ]
+
+[[package]]
+name = "tree-sitter-yarnlock"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ad792050ed5e47739c2923f6b1c3298dff9ceb72943883a4f19eaf93c6cb6c91"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "typed-path"
+version = "0.12.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "54ec2755506471f54baf5e4bb5499d8e510cc1caf271270e778a736bd2d7336c"
 
 [[package]]
 name = "typenum"
@@ -2925,6 +3415,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4ac048d71ede7ee76d585517add45da530660ef4390e49b098733c6e897f254"
 
 [[package]]
+name = "unscanny"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e9df2af067a7953e9c3831320f35c1cc0600c30d44d9f7a12b01db1cd88d6b47"
+
+[[package]]
 name = "url"
 version = "2.5.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2934,7 +3430,14 @@ dependencies = [
  "idna",
  "percent-encoding",
  "serde",
+ "serde_derive",
 ]
+
+[[package]]
+name = "urlencoding"
+version = "2.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "daf8dba3b7eb870caf1ddeed7bc9d2a049f3cfdfae7cb521b087cc33ae4c49da"
 
 [[package]]
 name = "utf8_iter"
@@ -2974,6 +3477,15 @@ name = "vcpkg"
 version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426"
+
+[[package]]
+name = "version-ranges"
+version = "0.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31e9bd4e9c9ff6a2a9b5969462ba26216af3e010df0377dad8320ab515262ef8"
+dependencies = [
+ "smallvec",
+]
 
 [[package]]
 name = "version_check"
@@ -3319,6 +3831,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aee1b19627c7c60102ab80d3a9cbe18de90bfe03bfa6c3715447681f0e8c8af6"
 
 [[package]]
+name = "yarn-lock-parser"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f903203119ded2bc5e8ba635fa8f3c54bddcc174f89d2b39637cf1be5c3f0944"
+dependencies = [
+ "nom",
+ "nom-language",
+ "thiserror 2.0.20",
+]
+
+[[package]]
 name = "yoke"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3417,18 +3940,16 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "2.4.2"
+version = "9.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fabe6324e908f85a1c52063ce7aa26b68dcb7eb6dbc83a2d148403c9bc3eba50"
+checksum = "6e04976da629d3b04204ba8105b396a193af8ad2583b2c79bfb3ab8af580a11e"
 dependencies = [
- "arbitrary",
  "crc32fast",
- "crossbeam-utils",
- "displaydoc",
  "flate2",
  "indexmap",
  "memchr",
- "thiserror",
+ "nix",
+ "typed-path",
  "zopfli",
 ]
 
