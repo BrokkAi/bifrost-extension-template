@@ -58,7 +58,7 @@ See [Artifact and evidence guide](docs/ARTIFACTS.md) for the bundle layout and c
 `Cargo.toml` pins the published package exactly:
 
 ```toml
-brokk-bifrost-runtime = "=0.14.3"
+brokk-bifrost-runtime = "=0.14.4"
 ```
 
 There is no path or Git dependency and no Bifrost source checkout is required. All integration goes through `brokk_bifrost_runtime::extension` or its canonical JSON/JSONL codecs. Bifrost never depends on this repository.
@@ -69,7 +69,7 @@ Use `Path` and `PathBuf` for filesystem access. Protocol identities use canonica
 
 ## Cache-state statement
 
-The public 0.14.3 workspace API freezes an immutable source generation and exposes a portable content identity. This example uses the default ephemeral mode, so the cold manifest declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Opt-in persisted workspaces must report their engaged store mode and diagnostics before a tool makes any reuse claim.
+The public 0.14.4 workspace API freezes an immutable source generation and exposes a portable content identity. This example uses the default ephemeral mode, so the cold manifest declares `fully_cold`; the same-process reopen manifest declares `rebuilt`, `warmup_count = 1`, and no persisted source or semantic artifact reuse. Opt-in persisted workspaces must report their engaged store mode and diagnostics before a tool makes any reuse claim.
 
 ## Development and CI
 
@@ -89,9 +89,9 @@ A second workflow, [`.github/workflows/policy-scan.yml`](.github/workflows/polic
 - uses: BrokkAi/bifrost-policy-scan@v0
 ```
 
-This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names for Bifrost 0.14.3 and records both tags in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one. Bifrost ships no rules of its own; with default inputs the action acquires them from the public `BrokkAi/bifrost-packs` repository at its pinned rules and packs releases, authenticating with the job's `github.token`, so the example sets no `packs-source`.
+This repository requires every third-party action to be SHA-pinned, so the workflow pins the commit `v0` currently names for Bifrost 0.14.4 and records both tags in a comment. Copy `@v0` for a gate that tracks releases, or pin a commit or an exact `vX.Y.Z` tag for a reproducible one. Bifrost ships no rules of its own; with default inputs the action acquires them from the public `BrokkAi/bifrost-packs` repository at its pinned rules and packs releases, authenticating with the job's `github.token`, so the example sets no `packs-source`.
 
-The example runs the default `bifrost.code-smells` pack and uploads SARIF to GitHub code scanning. The action exits `0` when clean, `1` for findings at or above `fail-on`, and `2` when it reports the scan as unreliable. An `inconclusive` run means the analysis could not prove there is nothing more to find; the findings it does report remain valid. v0.14.3 still exits `2` on any inconclusive run, even one with findings. Six default rules return that verdict on this workspace, so the workflow lists them in `exclude-policy-ids` as a temporary workaround. That also drops their findings, so the list goes once the action no longer fails on inconclusive runs. [`.bifrost/policy-scope.json`](.bifrost/policy-scope.json) records the one standing review decision this repository makes: performance review prompts in `tests` describe the test harness rather than shipped code, so they stay in the report as scoped findings instead of gating the build. Inputs, diff-aware gating, baselines, caching, and suppression formats are documented at [CI gating with GitHub Actions](https://bifrost.brokk.ai/ci-github-actions/).
+The example runs the default `bifrost.code-smells` pack and uploads SARIF to GitHub code scanning. The action exits `1` when a finding crosses `fail-on`, whatever else happened in the run. It exits `2` when no finding crosses `fail-on` but some check gave no verdict at all. That covers a terminated run, an error-severity report diagnostic, truncated diagnostics, or a failed or unsupported policy, and it describes the tooling run, not the code. Otherwise it exits `0`. An `inconclusive` run means the analysis could not prove there is nothing more to find, and the findings it does report remain valid. Such a run is advisory: the action lists it as a warning and in the job summary, and it never fails the job on its own. Several default rules are inconclusive on this workspace, and the example runs all of them. Set `on-inconclusive: unreliable` to restore the strict reading, in which an inconclusive run exits `2`. [`.bifrost/policy-scope.json`](.bifrost/policy-scope.json) records the one standing review decision this repository makes: performance review prompts in `tests` describe the test harness rather than shipped code, so they stay in the report as scoped findings instead of gating the build. Inputs, diff-aware gating, baselines, caching, and suppression formats are documented at [CI gating with GitHub Actions](https://bifrost.brokk.ai/ci-github-actions/).
 
 ## Evidence categories and citation
 

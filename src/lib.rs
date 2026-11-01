@@ -29,8 +29,8 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const BIFROST_VERSION: &str = "0.14.3";
-const BIFROST_PACKAGE_REVISION: &str = "234c701a3605519c656a10b7cc29396306b124d9";
+const BIFROST_VERSION: &str = "0.14.4";
+const BIFROST_PACKAGE_REVISION: &str = "786891f9ed19d2086dfd6242ff15ca904b610620";
 const TEMPLATE_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Paths needed for one complete cold/reopen lifecycle.
